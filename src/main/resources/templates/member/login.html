@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head th:replace="~{fragments/common :: head('회원가입')}">
+  <script defer="" src="/js/bootstrap.bundle.min.js"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"></script>
+</head>
+
+
+<header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:replace="~{fragments/common :: menu('login')}">
+  </nav>
+</header>
+
+
+<body class="bg-light">
+<div class="p-5 container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow rounded">
+        <div class="card-body">
+          <h4 class="text-center mb-4">로그인</h4>
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="userId" class="form-label">아이디</label>
+              <input type="text" class="form-control" id="userId" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">비밀번호</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">로그인</button>
+          </form>
+          <button id="joinBtn" class="btn btn-success w-100 mt-2">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // 폼 기본 동작 방지
+
+    const userId = document.getElementById('userId').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, password })
+    });
+
+    if (response.ok) {
+      const token = response.headers.get("Authorization");
+      localStorage.setItem("accessToken", token);
+      location.href = "/";
+    } else {
+      location.href = "/member/login";
+    }
+  });
+
+
+  document.getElementById('joinBtn').addEventListener('click', () => {
+    window.location.href = "/view/join";
+  });
+</script>
+
+</body>
+</html>
