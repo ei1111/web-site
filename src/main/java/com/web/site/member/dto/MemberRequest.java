@@ -1,36 +1,37 @@
-package com.web.site.member.form;
+package com.web.site.member.dto;
 
 import com.web.site.member.entity.Address;
 import com.web.site.member.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "회원 가입 request")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberRequest {
-    @Schema(description = "회원번호")
-    private Long id;
-
-    @Schema(description = "아이디")
+    @NotBlank(message = "사용자 아이디는 필수 입니다,")
+    @Schema(description = "아이디", example = "ADMIN")
     private String userId;
 
-    @Schema(description = "비밀번호")
+    @NotBlank(message = "사용자 비밀번호는 필수 입니다,")
+    @Schema(description = "비밀번호", example = "1")
     private String password;
 
-    @Schema(description = "이름")
+    @Schema(description = "이름", example = "홍길동")
     private String name;
 
-    @Schema(description = "이메일")
+    @NotBlank(message = "사용자 이메일는 필수 입니다,")
+    @Schema(description = "이메일",example = "aaa@naver.com")
     private String email;
 
     @Schema(description = "거주도시", example = "서울")
@@ -44,7 +45,6 @@ public class MemberRequest {
 
 
     public Member toMemberEntity(String password) {
-        Address address = new Address(city, street, zipcode);
-        return Member.from(userId, password, name, email, address);
+        return Member.from(userId, password, name, email,  Address.of(city, street, zipcode));
     }
 }

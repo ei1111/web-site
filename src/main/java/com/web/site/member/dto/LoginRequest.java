@@ -1,6 +1,7 @@
-package com.web.site.member.form;
+package com.web.site.member.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +12,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "로그인 request")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginRequest {
-
     private String userId;
     private String password;
 }

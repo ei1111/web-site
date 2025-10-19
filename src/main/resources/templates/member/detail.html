@@ -42,30 +42,23 @@
   </tbody>
 </table>
 
-<input id="id" type="hidden">
-
 <button id="memberUpdate" class="btn btn-success mt-2" style="float: right; width: 10%;">회원 수정</button>
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       const token = localStorage.getItem("accessToken");
-
-      const response = await fetch("/api/v1/detail", {
+      const response = await fetch("/api/v1/members/me", {
         method: "GET",
-        headers: {
-          "Authorization":  token
-        }
+        headers: { "Authorization": `Bearer ${token}` }
       });
 
       if (!response.ok) {
         throw new Error('회원 정보를 불러올 수 없습니다');
       }
       const member = await response.json();
-
       document.getElementById('name').innerText = member.name;
       document.getElementById('userId').innerText = member.userId;
       document.getElementById('email').innerText = member.email;
-      document.getElementById('id').value = member.id;
       document.getElementById('city').innerText = member.city;
       document.getElementById('street').innerText = member.street;
       document.getElementById('zipcode').innerText = member.zipcode;
@@ -75,9 +68,10 @@
   });
 
   document.getElementById('memberUpdate').addEventListener('click', () => {
-    window.location.href = "/view/update/";
+    window.location.href = "/view/update";
   });
 </script>
 
+<script th:src="@{/js/navbar.js}"></script>
 </body>
 </html>

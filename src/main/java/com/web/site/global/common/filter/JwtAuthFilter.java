@@ -31,7 +31,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
-
         if (!StringUtils.hasText(authorization) || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             //필터 종료
@@ -50,11 +49,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String userId = jwtUtil.getUserId(token);
         String role = jwtUtil.getRole(token);
 
-        Member member = new Member();
-        member.setUserId(userId);
-        member.setRole(Role.valueOf(role));
+        CustomUserDetails customUserDetails = CustomUserDetails.builder()
+                .userId(userId)
+                .role(Role.valueOf(role))
+                .build();
 
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
         Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null,
                 customUserDetails.getAuthorities());
 

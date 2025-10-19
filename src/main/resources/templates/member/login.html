@@ -54,11 +54,11 @@
     });
 
     if (response.ok) {
-      const token = response.headers.get("Authorization");
+      const token = response.headers.get("Authorization").replace(/^Bearer\s+/i, "");;
       localStorage.setItem("accessToken", token);
       location.href = "/";
     } else {
-      location.href = "/member/login";
+      location.href = "/view/login";
     }
   });
 

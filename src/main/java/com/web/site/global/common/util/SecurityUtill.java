@@ -16,15 +16,4 @@ public class SecurityUtill {
 
         return userId;
     }
-
-    public static String getUserRole() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String role = authentication.getAuthorities().iterator().next().getAuthority().toString();
-
-        if (Objects.isNull(role)) {
-            throw new RuntimeException("유저가 로그인 되지 않았습니다.");
-        }
-
-        return role;
-    }
 }

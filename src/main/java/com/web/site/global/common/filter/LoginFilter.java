@@ -2,14 +2,13 @@ package com.web.site.global.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.site.global.common.util.JwtUtil;
+import com.web.site.member.dto.LoginRequest;
 import com.web.site.member.entity.CustomUserDetails;
-import com.web.site.member.form.MemberRequest;
+import com.web.site.member.dto.MemberRequest;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,9 +40,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            MemberRequest memberRequest  = new ObjectMapper().readValue(request.getReader(), MemberRequest.class);
-            String userId = memberRequest.getUserId();
-            String password = memberRequest.getPassword();
+            LoginRequest loginRequest  = new ObjectMapper().readValue(request.getReader(), LoginRequest.class);
+            String userId = loginRequest.getUserId();
+            String password = loginRequest.getPassword();
             //authenticationManager에서 검증진행(디비에서 회원정보를 땡겨와서 UserDetails 서비스에서 유저정보를 받고 검증진행)
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userId, password));
         } catch (IOException e) {

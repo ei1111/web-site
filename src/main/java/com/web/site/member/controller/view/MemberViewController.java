@@ -29,7 +29,7 @@ public class MemberViewController {
         return "member/detail";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/update")
     public String updateForm() {
         return "member/update";
     }

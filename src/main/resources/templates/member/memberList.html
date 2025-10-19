@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="kr">
-<head th:replace="~{fragments/common :: head('회원 상세 조회')}">
+<head th:replace="~{fragments/common :: head('회원 리스트')}">
   <script defer="" src="/js/bootstrap.bundle.min.js"
           integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"></script>
 </head>
@@ -24,6 +24,7 @@
       <thead>
       <tr>
         <th>#</th>
+        <th>아이디</th>
         <th>이름</th>
         <th>도시</th>
         <th>주소</th>
@@ -39,7 +40,13 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("/member/v1/list")
+    const token = localStorage.getItem("accessToken");
+
+    fetch("/api/v1/members",
+        {
+          method: "GET",
+          headers: { "Authorization": `Bearer ${token}` }
+        })
     .then(response => response.json())
     .then(data => {
       const tbody = document.querySelector("#memberTable tbody");
@@ -47,6 +54,7 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${member.id}</td>
+            <td>${member.userId}</td>
             <td>${member.name}</td>
             <td>${member.city || ''}</td>
             <td>${member.street || ''}</td>
@@ -60,5 +68,6 @@
     });
   });
 </script>
+<script th:src="@{/js/navbar.js}"></script>
 </body>
 </html>

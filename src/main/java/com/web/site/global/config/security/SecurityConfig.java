@@ -7,8 +7,10 @@ import com.web.site.global.common.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -30,7 +33,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
 
     private static final String[] AUTH_ALLOWLIST = {
-            "/auth/login","/api/v1/members" , "/view/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
+            "/auth/login", "/view/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/css/**", "/js/**" ,
             "/index", "/", "/actuator/**", "/coupon/v1/**" , "/favicon.ico"
     };
@@ -62,10 +65,10 @@ public class SecurityConfig {
 
         //이거 넣으면 모든 url에 토큰 검사함
         http.authorizeHttpRequests(a -> a
+                // 회원가입 데이터 저장 풀어주기
+                .requestMatchers(HttpMethod.POST, "/api/v1/members").permitAll()
                 .requestMatchers(AUTH_ALLOWLIST).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/employees/**").hasRole("USER")
-                .requestMatchers("/departments/**").hasRole("USER")
+             //   .requestMatchers(HttpMethod.GET,"/api/v1/members").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
         );
 

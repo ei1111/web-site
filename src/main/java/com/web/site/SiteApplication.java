@@ -2,6 +2,7 @@ package com.web.site;
 
 import com.web.site.global.common.util.SecurityUtill;
 import java.util.Optional;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ public class SiteApplication {
 
     @Bean
     public AuditorAware<String> auditorProvider() {
-        return () -> Optional.of(SecurityUtill.getUserId());
+        return () ->  Optional.ofNullable(SecurityUtill.getUserId())
+                .or(() -> Optional.of("SYSTEM"));
     }
-
 }

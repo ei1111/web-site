@@ -2,8 +2,9 @@ package com.web.site.member.entity;
 
 
 import com.web.site.global.audit.BaseTimeEntity;
-import com.web.site.member.form.MemberRequest;
-import com.web.site.member.form.MemberResponse;
+import com.web.site.member.dto.MemberModifyRequest;
+import com.web.site.member.dto.MemberRequest;
+import com.web.site.member.dto.MemberResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -17,16 +18,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.Comment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
 @Getter
-@Setter
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {
 
     @Id
@@ -85,33 +84,20 @@ public class Member extends BaseTimeEntity {
         return userId.equalsIgnoreCase("admin") ? Role.ADMIN: Role.USER;
     }
 
-    public void update(MemberRequest request, PasswordEncoder passwordEncoder) {
-        if (StringUtils.hasText(request.getPassword())) {
-            this.password = passwordEncoder.encode(request.getPassword());
-        }
-
-        if(!Objects.equals(request.getName(), this.name)) {
+    public void update(MemberModifyRequest request, String password) {
+            this.password = password;
             this.name = request.getName();
-        }
-
-        if(!Objects.equals(request.getEmail(), this.email)) {
             this.email = request.getEmail();
-        }
     }
 
     public MemberResponse toResponse() {
         return MemberResponse.builder()
-                .id(this.id)
                 .userId(this.userId)
-                .password(this.password)
                 .name(this.name)
-                .email(this.getEmail())
+                .email(this.email)
                 .city(this.getCity())
                 .street(this.getStreet())
                 .zipcode(this.getZipCode())
                 .build();
     }
-
-
-
 }
