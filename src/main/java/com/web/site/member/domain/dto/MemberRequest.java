@@ -1,11 +1,9 @@
-package com.web.site.member.dto;
+package com.web.site.member.domain.dto;
 
-import com.web.site.member.entity.Address;
-import com.web.site.member.entity.Member;
+import com.web.site.member.domain.entity.Address;
+import com.web.site.member.domain.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

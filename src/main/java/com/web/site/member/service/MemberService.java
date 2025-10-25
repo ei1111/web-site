@@ -2,10 +2,10 @@ package com.web.site.member.service;
 
 import com.web.site.global.error.CustomException;
 import com.web.site.global.error.ErrorCode;
-import com.web.site.member.dto.MemberModifyRequest;
-import com.web.site.member.entity.Member;
-import com.web.site.member.dto.MemberRequest;
-import com.web.site.member.dto.MemberResponse;
+import com.web.site.member.domain.dto.MemberModifyRequest;
+import com.web.site.member.domain.entity.Member;
+import com.web.site.member.domain.dto.MemberRequest;
+import com.web.site.member.domain.dto.MemberResponse;
 import com.web.site.member.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

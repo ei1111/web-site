@@ -1,4 +1,4 @@
-package com.web.site.member.entity;
+package com.web.site.member.domain.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,6 @@ public enum Role {
     USER("USER", "일반 사용자"),
     ADMIN("ADMIN", "관리자");
 
-    private final String key;
-    private final String title;
+    private final String code;
+    private final String description;
 }

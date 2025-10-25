@@ -1,10 +1,9 @@
-package com.web.site.member.entity;
+package com.web.site.member.domain.entity;
 
 
 import com.web.site.global.audit.BaseTimeEntity;
-import com.web.site.member.dto.MemberModifyRequest;
-import com.web.site.member.dto.MemberRequest;
-import com.web.site.member.dto.MemberResponse;
+import com.web.site.member.domain.dto.MemberModifyRequest;
+import com.web.site.member.domain.dto.MemberResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,14 +12,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
 
 @Getter
 @Entity

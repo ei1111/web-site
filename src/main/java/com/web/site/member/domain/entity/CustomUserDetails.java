@@ -1,5 +1,5 @@
 
-package com.web.site.member.entity;
+package com.web.site.member.domain.entity;
 
 import java.util.Collection;
 import java.util.List;

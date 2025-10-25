@@ -2,21 +2,16 @@ package com.web.site.global.common.filter;
 
 
 import com.web.site.global.common.util.JwtUtil;
-import com.web.site.member.entity.CustomUserDetails;
-import com.web.site.member.entity.Member;
-import com.web.site.member.entity.Role;
+import com.web.site.member.domain.entity.CustomUserDetails;
+import com.web.site.member.domain.entity.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;

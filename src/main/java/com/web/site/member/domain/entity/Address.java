@@ -1,4 +1,4 @@
-package com.web.site.member.entity;
+package com.web.site.member.domain.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
