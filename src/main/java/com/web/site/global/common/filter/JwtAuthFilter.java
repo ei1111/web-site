@@ -3,7 +3,7 @@ package com.web.site.global.common.filter;
 
 import com.web.site.global.common.util.JwtUtil;
 import com.web.site.member.domain.entity.CustomUserDetails;
-import com.web.site.member.domain.entity.Role;
+import com.web.site.global.enums.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

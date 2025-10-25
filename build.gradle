@@ -55,8 +55,15 @@ dependencies {
     /*mysql*/
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    /*webFlux*/
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    /*WebFlux m1 호환*/
+    implementation "io.netty:netty-resolver-dns-native-macos:4.1.107.Final:osx-aarch_64"
+
     /*validation*/
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 
     /*API 문서 생성(Swagger)*/
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'

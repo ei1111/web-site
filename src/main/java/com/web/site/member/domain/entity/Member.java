@@ -2,9 +2,12 @@ package com.web.site.member.domain.entity;
 
 
 import com.web.site.global.audit.BaseTimeEntity;
+import com.web.site.global.converter.RoleConverter;
+import com.web.site.global.enums.Role;
 import com.web.site.member.domain.dto.MemberModifyRequest;
 import com.web.site.member.domain.dto.MemberResponse;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
@@ -45,7 +49,7 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Comment("권한")
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = RoleConverter.class)
     private Role role;
 
     @Embedded
@@ -94,6 +98,7 @@ public class Member extends BaseTimeEntity {
                 .city(this.getCity())
                 .street(this.getStreet())
                 .zipcode(this.getZipCode())
+                .role(this.role)
                 .build();
     }
 }

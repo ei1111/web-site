@@ -1,6 +1,7 @@
 
 package com.web.site.member.domain.entity;
 
+import com.web.site.global.enums.Role;
 import java.util.Collection;
 import java.util.List;
 import lombok.Builder;

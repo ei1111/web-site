@@ -1,6 +1,7 @@
 package com.web.site.member.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.web.site.global.enums.Role;
 import com.web.site.member.domain.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,9 @@ public class MemberResponse {
     @Schema(description = "우편번호", example = "01321")
     private String zipcode;
 
+    @Schema(description = "회원권한", example = "U")
+    private Role role;
+
     public static MemberResponse from(Member member) {
         return new MemberResponse(
                 member.getUserId(),
@@ -41,7 +45,8 @@ public class MemberResponse {
                 member.getEmail(),
                 member.getCity(),
                 member.getStreet(),
-                member.getZipCode()
+                member.getZipCode(),
+                member.getRole()
         );
     }
 }
