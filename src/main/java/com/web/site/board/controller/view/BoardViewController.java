@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/view")
 public class BoardViewController {
 
-    @GetMapping("/list")
-    public String list() {
-        return "board/list";
+    @GetMapping("/boardList")
+    public String board() {
+        return "board/boardList";
     }
 
-    @GetMapping("/form")
+    @GetMapping("/write")
     public String form(@RequestParam(required = false) Long boardId, Model model) {
         model.addAttribute("boardId", boardId);
-        return "board/form";
+        return "board/write";
     }
 }

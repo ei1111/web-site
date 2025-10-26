@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board/v1")
-@Tag(name = "게시판 CRUD API")
+@RequestMapping("/api/v1")
+@Tag(name = "2. 게시판 CRUD API")
 @OpenAPIDefinition(info = @Info(title = "쇼핑물 API", description = "쇼핑몰 서버에서 제공하는 각종 메타정보 API", version = "v1"))
 public class BoardApiController {
 
