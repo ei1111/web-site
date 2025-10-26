@@ -1,6 +1,6 @@
-package com.web.site.board.entity;
+package com.web.site.board.domain.entity;
 
-import com.web.site.board.form.BoardRequest;
+import com.web.site.board.domain.dto.BoardRequest;
 import com.web.site.global.audit.BaseEntity;
 import com.web.site.member.domain.entity.Member;
 import jakarta.persistence.Column;

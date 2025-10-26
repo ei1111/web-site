@@ -1,7 +1,7 @@
 package com.web.site.member.domain.entity;
 
 
-import com.web.site.board.entity.Board;
+import com.web.site.board.domain.entity.Board;
 import com.web.site.global.audit.BaseTimeEntity;
 import com.web.site.global.converter.RoleConverter;
 import com.web.site.global.enums.Role;
@@ -16,9 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;

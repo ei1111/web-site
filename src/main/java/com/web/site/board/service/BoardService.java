@@ -1,10 +1,10 @@
 package com.web.site.board.service;
 
 
-import com.web.site.board.entity.Board;
-import com.web.site.board.form.BoardPageResponse;
-import com.web.site.board.form.BoardRequest;
-import com.web.site.board.form.BoardResponse;
+import com.web.site.board.domain.entity.Board;
+import com.web.site.board.domain.dto.BoardPageResponse;
+import com.web.site.board.domain.dto.BoardRequest;
+import com.web.site.board.domain.dto.BoardResponse;
 import com.web.site.board.repository.BoardRepository;
 import com.web.site.board.repository.BoardRepositoryCustom;
 import com.web.site.global.common.util.SecurityUtill;

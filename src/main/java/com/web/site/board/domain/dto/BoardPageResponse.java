@@ -1,4 +1,4 @@
-package com.web.site.board.form;
+package com.web.site.board.domain.dto;
 
 import java.util.List;
 import lombok.Getter;

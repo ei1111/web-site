@@ -1,8 +1,8 @@
-package com.web.site.board.form;
+package com.web.site.board.domain.dto;
 
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.web.site.board.entity.Board;
+import com.web.site.board.domain.entity.Board;
 import com.web.site.global.common.util.SecurityUtill;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

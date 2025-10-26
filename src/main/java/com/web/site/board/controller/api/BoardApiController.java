@@ -1,9 +1,9 @@
 package com.web.site.board.controller.api;
 
 
-import com.web.site.board.form.BoardPageResponse;
-import com.web.site.board.form.BoardRequest;
-import com.web.site.board.form.BoardResponse;
+import com.web.site.board.domain.dto.BoardPageResponse;
+import com.web.site.board.domain.dto.BoardRequest;
+import com.web.site.board.domain.dto.BoardResponse;
 import com.web.site.board.service.BoardService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;

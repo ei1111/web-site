@@ -1,16 +1,14 @@
 package com.web.site.board.repository;
 
 
-
-
-import static com.web.site.board.entity.QBoard.*;
-import static com.web.site.member.domain.entity.QMember.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.web.site.board.form.BoardResponse;
-import com.web.site.board.form.QBoardResponse;
+import com.web.site.board.domain.dto.BoardResponse;
+import com.web.site.board.domain.dto.QBoardResponse;
+import com.web.site.board.domain.entity.QBoard;
+import com.web.site.member.domain.entity.QMember;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
@@ -25,9 +23,10 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class BoardRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
+    private final QBoard board = QBoard.board;
+    private final QMember member = QMember.member;
 
-    public Page<BoardResponse> findByTitleContainingOrContentContaining(String serachWord,
-            Pageable pageable) {
+    public Page<BoardResponse> findByTitleContainingOrContentContaining(String serachWord, Pageable pageable) {
 
         AtomicInteger index = new AtomicInteger((int) pageable.getOffset() + 1);
 
