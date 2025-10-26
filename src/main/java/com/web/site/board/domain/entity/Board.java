@@ -51,6 +51,7 @@ public class Board extends BaseEntity {
         this.member = member;
     }
 
+
     public void update(BoardRequest boardRequest) {
         String reqtitle = boardRequest.getTitle();
         String reqContent = boardRequest.getContent();

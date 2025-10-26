@@ -59,9 +59,6 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private Address address;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> boards = new ArrayList<>();
-
     public String getCity() {
         return address.getCity();
     }

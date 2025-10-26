@@ -1,6 +1,7 @@
 package com.web.site.board.domain.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.querydsl.core.annotations.QueryProjection;
 import com.web.site.board.domain.entity.Board;
 import com.web.site.global.common.util.SecurityUtill;
@@ -14,9 +15,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardResponse {
     public Long boardId;
     public String title;

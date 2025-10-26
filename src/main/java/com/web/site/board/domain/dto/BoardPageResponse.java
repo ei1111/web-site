@@ -1,27 +1,32 @@
 package com.web.site.board.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardPageResponse {
 
-    Page<BoardResponse> boardResponse;
-    int startPage;
-    int endPage;
-    long totalCount;
-    List<BoardResponse> boards;
+    private int pageNumber;
+    private int startPage;
+    private int endPage;
+    private long totalCount;
+    private List<BoardResponse> boards;
 
     public BoardPageResponse(Page<BoardResponse> boardResponse) {
-        this.boardResponse = boardResponse;
-        this.startPage = Math.max(1, getBoardPageNumer() - 4);
-        this.endPage = Math.min(boardResponse.getTotalPages(), getBoardPageNumer() + 4);
+        this.pageNumber = boardResponse.getNumber();
+        this.startPage = Math.max(1, pageNumber - 4);
+        this.endPage = Math.min(boardResponse.getTotalPages(), pageNumber + 4);
         this.totalCount = boardResponse.getTotalElements();
         this.boards = boardResponse.getContent();
-    }
-
-    public int getBoardPageNumer() {
-        return boardResponse.getPageable().getPageNumber();
     }
 }

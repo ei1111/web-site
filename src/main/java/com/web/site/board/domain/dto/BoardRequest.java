@@ -15,8 +15,8 @@ import lombok.Setter;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "게시판 항목")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardRequest {
     @Schema(description = "게시판 Id")
     private Long boardId;

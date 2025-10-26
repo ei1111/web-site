@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 
 
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(description = "회원 가입 response")
 public class MemberResponse {
