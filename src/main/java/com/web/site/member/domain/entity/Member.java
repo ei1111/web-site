@@ -1,26 +1,32 @@
 package com.web.site.member.domain.entity;
 
 
+import com.web.site.board.entity.Board;
 import com.web.site.global.audit.BaseTimeEntity;
 import com.web.site.global.converter.RoleConverter;
 import com.web.site.global.enums.Role;
 import com.web.site.member.domain.dto.MemberModifyRequest;
 import com.web.site.member.domain.dto.MemberResponse;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.springframework.util.StringUtils;
 
 @Getter
 @Entity
@@ -55,6 +61,9 @@ public class Member extends BaseTimeEntity {
     @Embedded
     private Address address;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards = new ArrayList<>();
+
     public String getCity() {
         return address.getCity();
     }
@@ -85,9 +94,17 @@ public class Member extends BaseTimeEntity {
     }
 
     public void update(MemberModifyRequest request, String password) {
+        if (StringUtils.hasText(password)) {
             this.password = password;
+        }
+
+        if (StringUtils.hasText(request.getName())) {
             this.name = request.getName();
+        }
+
+        if (StringUtils.hasText(request.getEmail())) {
             this.email = request.getEmail();
+        }
     }
 
     public MemberResponse toResponse() {

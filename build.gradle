@@ -61,8 +61,17 @@ dependencies {
     /*WebFlux m1 호환*/
     implementation "io.netty:netty-resolver-dns-native-macos:4.1.107.Final:osx-aarch_64"
 
+    /*Redis*/
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:3.2.0'
+
     /*validation*/
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    /* querydsl */
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
 
     /*API 문서 생성(Swagger)*/
@@ -80,3 +89,20 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+/* querydsl start*/
+def generated = 'build/generated'
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += [generated]
+        }
+    }
+}
+/* querydsl end */

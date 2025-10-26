@@ -1,6 +1,8 @@
 package com.web.site;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.web.site.global.common.util.SecurityUtill;
+import jakarta.persistence.EntityManager;
 import java.util.Optional;
 import org.apache.catalina.security.SecurityUtil;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,11 @@ public class SiteApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SiteApplication.class, args);
 	}
+
+    @Bean
+    JPAQueryFactory queryFactory(EntityManager em) {
+        return new JPAQueryFactory(em);
+    }
 
 
     @Bean

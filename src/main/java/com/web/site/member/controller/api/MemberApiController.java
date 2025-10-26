@@ -5,6 +5,7 @@ import com.web.site.member.domain.entity.CustomUserDetails;
 import com.web.site.member.domain.dto.MemberRequest;
 import com.web.site.member.domain.dto.MemberResponse;
 import com.web.site.member.service.MemberService;
+import com.web.site.member.service.MemberServiceTx;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -27,11 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberApiController {
 
     private final MemberService memberService;
+    private final MemberServiceTx memberServiceTx;
 
     @PostMapping("/members")
     @Operation(summary = "회원 정보 등록 API")
     public ResponseEntity<String> save(@Valid @RequestBody MemberRequest request) {
-        memberService.save(request);
+        memberServiceTx.save(request);
         return ResponseEntity.ok("회원 가입 성공!");
     }
 
@@ -44,7 +46,7 @@ public class MemberApiController {
     @PutMapping("/members")
     @Operation(summary = "회원 정보 수정 API")
     public ResponseEntity<String> update( @RequestBody MemberModifyRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        memberService.update(request, userDetails.getUsername());
+        memberServiceTx.update(request, userDetails.getUsername());
         return ResponseEntity.ok().body("회원 수정 성공");
     }
 
