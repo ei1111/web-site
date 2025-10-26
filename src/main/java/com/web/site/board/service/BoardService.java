@@ -36,11 +36,15 @@ public class BoardService {
     public BoardResponse findById(Long id) {
         return Optional.ofNullable(redisGet(id))
                 .orElseGet(() -> {
-                    Board board = boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-                    BoardResponse boardResponse = BoardResponse.from(board);
+                    Board board = getBoardEntity(id);
+                    BoardResponse boardResponse = board.toResponse();
                     redisSet(id, boardResponse);
                     return boardResponse;
                 });
+    }
+
+    private Board getBoardEntity(Long id) {
+        return boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     private BoardResponse redisGet(Long id) {
@@ -55,13 +59,13 @@ public class BoardService {
     public Board save(BoardRequest boardRequest) {
         String userId = SecurityUtill.getUserId();
         Member member = memberService.getMemberEntityByUserId(userId);
-        return boardRepository.save(Board.from(boardRequest, member));
+        return boardRepository.save(boardRequest.from(member));
     }
 
     @Transactional
     public void update(BoardRequest boardRequest) {
-        Board board = boardRepository.findById(boardRequest.getBoardId()).orElseThrow(IllegalArgumentException::new);
-        Board updateBoard = board.updateForm(boardRequest);
-        redisSet(boardRequest.getBoardId(), BoardResponse.from(updateBoard));
+        Board board = getBoardEntity(boardRequest.getBoardId());
+        board.update(boardRequest);
+        redisSet(boardRequest.getBoardId(), board.toResponse());
     }
 }

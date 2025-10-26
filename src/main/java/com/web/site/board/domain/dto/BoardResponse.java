@@ -6,6 +6,7 @@ import com.web.site.board.domain.entity.Board;
 import com.web.site.global.common.util.SecurityUtill;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoardResponse {
@@ -28,9 +30,5 @@ public class BoardResponse {
         this.title = title;
         this.content = content;
         this.userId = userId;
-    }
-
-    public static BoardResponse from(Board board) {
-        return new BoardResponse(board.getId(), board.getTitle(), board.getContent(), SecurityUtill.getUserId());
     }
 }
