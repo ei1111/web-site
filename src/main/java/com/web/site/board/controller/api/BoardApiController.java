@@ -5,6 +5,7 @@ import com.web.site.board.domain.dto.BoardPageResponse;
 import com.web.site.board.domain.dto.BoardRequest;
 import com.web.site.board.domain.dto.BoardResponse;
 import com.web.site.board.service.BoardService;
+import com.web.site.global.audit.logging.LogExecutionTime;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,6 +34,7 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @GetMapping("/list")
+    @LogExecutionTime(description = "게시판 리스트")
     @Operation(summary = "게시판 작성 리스트 조회 API", description =  "게시판 작성 리스트 조회 API")
     public BoardPageResponse list(@PageableDefault Pageable pageable, @RequestParam(required = false) String searchText) {
         return boardService.findAll(searchText, pageable);

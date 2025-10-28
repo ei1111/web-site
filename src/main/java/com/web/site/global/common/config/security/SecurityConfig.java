@@ -1,4 +1,4 @@
-package com.web.site.global.config.security;
+package com.web.site.global.common.config.security;
 
 
 import com.web.site.global.common.filter.JwtAuthFilter;

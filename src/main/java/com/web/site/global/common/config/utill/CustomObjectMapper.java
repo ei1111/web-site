@@ -1,4 +1,4 @@
-package com.web.site.global.config.utill;
+package com.web.site.global.common.config.utill;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

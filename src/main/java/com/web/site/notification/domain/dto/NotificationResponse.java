@@ -1,4 +1,4 @@
-package com.web.site.notification.dto;
+package com.web.site.notification.domain.dto;
 
 import com.web.site.global.audit.BaseEntity;
 import com.web.site.global.audit.BaseTimeEntity;

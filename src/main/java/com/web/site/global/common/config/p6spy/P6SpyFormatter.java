@@ -1,4 +1,4 @@
-package com.web.site.global.config.p6spy;
+package com.web.site.global.common.config.p6spy;
 
 import com.p6spy.engine.common.ConnectionInformation;
 import com.p6spy.engine.event.JdbcEventListener;

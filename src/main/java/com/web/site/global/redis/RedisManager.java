@@ -1,7 +1,7 @@
 package com.web.site.global.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.web.site.global.config.utill.CustomObjectMapper;
+import com.web.site.global.common.config.utill.CustomObjectMapper;
 import java.time.Duration;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

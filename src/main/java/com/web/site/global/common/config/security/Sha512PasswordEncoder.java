@@ -1,4 +1,4 @@
-package com.web.site.global.config.security;
+package com.web.site.global.common.config.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

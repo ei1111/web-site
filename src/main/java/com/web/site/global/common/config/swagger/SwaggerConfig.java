@@ -1,4 +1,4 @@
-package com.web.site.global.config.swagger;
+package com.web.site.global.common.config.swagger;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

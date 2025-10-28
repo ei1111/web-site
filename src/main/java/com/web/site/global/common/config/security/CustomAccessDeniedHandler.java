@@ -1,4 +1,4 @@
-package com.web.site.global.config.security;
+package com.web.site.global.common.config.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
