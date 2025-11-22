@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutMenu = document.getElementById("logoutMenu");
   const mypageMenu = document.getElementById("mypageMenu");
   const memberListMenu = document.getElementById("memberListMenu");
-  const registerMenu = document.getElementById("registerMenu");
-  const itemListMenu = document.getElementById("itemListMenu");
   const orderListMenu = document.getElementById("orderListMenu");
   const adminMenu = document.getElementById("adminMenu");
   const boardListMenu = document.getElementById("boardListMenu");
+  const itemRegistMenu = document.getElementById("itemRegistMenu");
+  const itemListMenu = document.getElementById("itemListMenu");
 
   if (token) {
     // 로그인 상태이면 로그인 메뉴 숨기기, 로그아웃/마이페이지 보이기
@@ -17,22 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutMenu) logoutMenu.style.display = "block";
     if (mypageMenu) mypageMenu.style.display = "block";
     if (memberListMenu) memberListMenu.style.display = "block";
-    if (registerMenu) registerMenu.style.display = "block";
     if (itemListMenu) itemListMenu.style.display = "block";
     if (orderListMenu) orderListMenu.style.display = "block";
     if (adminMenu) adminMenu.style.display = "block";
     if (boardListMenu) boardListMenu.style.display = "block";
+    if (itemRegistMenu) itemRegistMenu.style.display = "block";
   } else {
     // 로그아웃 상태이면 로그인 메뉴 보이기, 로그아웃/마이페이지 숨기기
     if (loginMenu) loginMenu.style.display = "block";
     if (logoutMenu) logoutMenu.style.display = "none";
     if (mypageMenu) mypageMenu.style.display = "none";
     if (memberListMenu) memberListMenu.style.display = "none";
-    if (registerMenu) registerMenu.style.display = "none";
     if (itemListMenu) itemListMenu.style.display = "none";
     if (orderListMenu) orderListMenu.style.display = "none";
     if (adminMenu) adminMenu.style.display = "none";
     if (boardListMenu) boardListMenu.style.display = "none";
+    if (itemRegistMenu) itemRegistMenu.style.display = "none";
   }
 });
 

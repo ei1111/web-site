@@ -1,0 +1,24 @@
+services:
+  mysql:
+    container_name: site-mysql
+    image: mysql:8.0.33
+    environment:
+      MYSQL_DATABASE: "spring_web"
+      MYSQL_ROOT_PASSWORD: "1234"
+      TZ: "Asia/Seoul"
+    ports:
+      - "3306:3306"
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_bin"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  redis:
+    image: 'redis:6.0.20'
+    container_name: site-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      -  ./.data/redis:/data
+volumes:
+  mysql_data:

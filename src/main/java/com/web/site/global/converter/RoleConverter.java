@@ -6,7 +6,7 @@ import jakarta.persistence.Converter;
 import java.util.Optional;
 
 //전역에서 자동으로 변경되는 걸로 사용하고 싶으면 (autoApply = true) 설정
-@Converter(autoApply = true)
+@Converter(autoApply = false)
 public class RoleConverter implements AttributeConverter<Role, String>  {
 
     @Override

@@ -35,7 +35,7 @@ public class SecurityConfig {
     private static final String[] AUTH_ALLOWLIST = {
             "/auth/login", "/view/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/css/**", "/js/**" ,
-            "/index", "/", "/actuator/**", "/coupon/v1/**" , "/favicon.ico"
+            "/index", "/", "/actuator/**", "/coupon/v1/**" , "/favicon.ico" ,"/images/**"
     };
 
     /*   @Bean

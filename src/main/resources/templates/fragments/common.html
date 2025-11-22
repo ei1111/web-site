@@ -42,16 +42,19 @@
         <li class="nav-item"  id="boardListMenu" style="display:none">
           <a class="nav-link" th:classappend = "${menu} == 'boardList' ? 'active'" href="/view/boardList">게시판</a>
         </li>
+        <li class="nav-item" id="itemRegistMenu" style="display:none">
+          <a class="nav-link" th:classappend= "${menu} == 'itemRegister' ? 'active'" href="/view/itemRegister">상품등록</a>
+        </li>
+
+        <li class="nav-item" id="itemListMenu" style="display:none">
+          <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/view/itemList">상품리스트</a>
+        </li>
 
         <!--
 
-                <li class="nav-item" id="registerMenu" style="display:none">
-                  <a class="nav-link" th:classappend= "${menu} == 'itemRegister' ? 'active'" href="/view/register">상품등록</a>
-                </li>
 
-                <li class="nav-item" id="itemListMenu" style="display:none">
-                  <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/view/itemList">상품리스트</a>
-                </li>
+
+
 
                 <li class="nav-item" id="orderListMenu" style="display:none">
                   <a class="nav-link" th:classappend= "${menu} == 'orderList' ? 'active'" href="/order/orderList">상품주문리스트</a>
