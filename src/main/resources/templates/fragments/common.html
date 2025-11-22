@@ -50,15 +50,17 @@
           <a class="nav-link" th:classappend= "${menu} == 'itemList' ? 'active'" href="/view/itemList">상품리스트</a>
         </li>
 
+        <li class="nav-item" id="orderListMenu" style="display:none">
+          <a class="nav-link" th:classappend= "${menu} == 'orderList' ? 'active'" href="/view/orderList">상품주문리스트</a>
+        </li>
+
         <!--
 
 
 
 
 
-                <li class="nav-item" id="orderListMenu" style="display:none">
-                  <a class="nav-link" th:classappend= "${menu} == 'orderList' ? 'active'" href="/order/orderList">상품주문리스트</a>
-                </li>
+
 
                 <li class="nav-item" id="adminMenu" style="display:none">
                   <a class="nav-link" th:classappend= "${menu} == 'admin' ? 'active'" href="/payment/admin">결제 내역 리스트</a>

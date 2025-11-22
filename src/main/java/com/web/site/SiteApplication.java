@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.client.RestClient;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -29,5 +30,10 @@ public class SiteApplication {
     public AuditorAware<String> auditorProvider() {
         return () ->  Optional.ofNullable(SecurityUtill.getUserId())
                 .or(() -> Optional.of("SYSTEM"));
+    }
+
+    @Bean
+    public RestClient restClient() {
+        return RestClient.create();
     }
 }
