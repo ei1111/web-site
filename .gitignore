@@ -38,3 +38,6 @@ out/
 
 ### portOne ###
 local.env
+
+## 사진 ###
+/upload/**
