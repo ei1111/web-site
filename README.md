@@ -31,4 +31,4 @@
 
 ## API 문서 확인 (Swagger)
 
-- [http://localhost:808/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
