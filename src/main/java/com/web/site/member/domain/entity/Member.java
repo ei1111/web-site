@@ -1,24 +1,18 @@
 package com.web.site.member.domain.entity;
 
 
-import com.web.site.board.domain.entity.Board;
 import com.web.site.global.audit.BaseTimeEntity;
 import com.web.site.global.converter.RoleConverter;
 import com.web.site.global.enums.Role;
-import com.web.site.member.domain.dto.MemberModifyRequest;
-import com.web.site.member.domain.dto.MemberResponse;
-import jakarta.persistence.CascadeType;
+import com.web.site.member.domain.dto.reqeust.MemberModifyRequest;
+import com.web.site.member.domain.dto.response.MemberResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

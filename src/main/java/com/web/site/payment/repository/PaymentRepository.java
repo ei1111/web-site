@@ -2,7 +2,7 @@ package com.web.site.payment.repository;
 
 
 import com.web.site.order.domain.entity.Order;
-import com.web.site.payment.entity.Payment;
+import com.web.site.payment.domain.entity.Payment;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

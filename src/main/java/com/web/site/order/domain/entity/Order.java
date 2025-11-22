@@ -8,7 +8,7 @@ import com.web.site.global.common.enums.DeliveryStatus;
 import com.web.site.global.common.enums.OrderStatus;
 import com.web.site.member.domain.entity.Member;
 import com.web.site.orderItem.domain.entity.OrderItem;
-import com.web.site.payment.entity.Payment;
+import com.web.site.payment.domain.entity.Payment;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

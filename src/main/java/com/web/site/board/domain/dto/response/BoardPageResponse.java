@@ -1,8 +1,7 @@
-package com.web.site.board.domain.dto;
+package com.web.site.board.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

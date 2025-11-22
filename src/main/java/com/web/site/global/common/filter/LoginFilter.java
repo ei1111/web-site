@@ -2,7 +2,7 @@ package com.web.site.global.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.site.global.common.util.JwtUtil;
-import com.web.site.member.domain.dto.LoginRequest;
+import com.web.site.member.domain.dto.reqeust.LoginRequest;
 import com.web.site.member.domain.entity.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

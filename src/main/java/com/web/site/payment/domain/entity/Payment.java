@@ -1,9 +1,9 @@
-package com.web.site.payment.entity;
+package com.web.site.payment.domain.entity;
 
 
 import com.web.site.global.audit.BaseEntity;
 import com.web.site.order.domain.entity.Order;
-import com.web.site.payment.form.PaymentRequest;
+import com.web.site.payment.domain.dto.request.PaymentRequest;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

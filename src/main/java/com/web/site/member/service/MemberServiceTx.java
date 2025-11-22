@@ -2,12 +2,11 @@ package com.web.site.member.service;
 
 import com.web.site.global.error.CustomException;
 import com.web.site.global.error.ErrorCode;
-import com.web.site.member.domain.dto.MemberModifyRequest;
-import com.web.site.member.domain.dto.MemberRequest;
-import com.web.site.member.domain.dto.MemberResponse;
+import com.web.site.member.domain.dto.reqeust.MemberModifyRequest;
+import com.web.site.member.domain.dto.reqeust.MemberRequest;
+import com.web.site.member.domain.dto.response.MemberResponse;
 import com.web.site.member.domain.entity.Member;
 import com.web.site.member.repository.MemberRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

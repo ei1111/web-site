@@ -1,9 +1,9 @@
 package com.web.site.member.controller.api;
 
-import com.web.site.member.domain.dto.MemberModifyRequest;
+import com.web.site.member.domain.dto.reqeust.MemberModifyRequest;
 import com.web.site.member.domain.entity.CustomUserDetails;
-import com.web.site.member.domain.dto.MemberRequest;
-import com.web.site.member.domain.dto.MemberResponse;
+import com.web.site.member.domain.dto.reqeust.MemberRequest;
+import com.web.site.member.domain.dto.response.MemberResponse;
 import com.web.site.member.service.MemberService;
 import com.web.site.member.service.MemberServiceTx;
 import io.swagger.v3.oas.annotations.Operation;

@@ -5,7 +5,7 @@ package com.web.site.item.domain.entity;
 import com.web.site.global.audit.BaseEntity;
 import com.web.site.global.error.CustomException;
 import com.web.site.global.error.ErrorCode;
-import com.web.site.item.domain.dto.ItemRequest;
+import com.web.site.item.domain.dto.reqeust.ItemRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

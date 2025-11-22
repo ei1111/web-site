@@ -1,4 +1,4 @@
-package com.web.site.member.domain.dto;
+package com.web.site.member.domain.dto.reqeust;
 
 import com.web.site.member.domain.entity.Address;
 import com.web.site.member.domain.entity.Member;

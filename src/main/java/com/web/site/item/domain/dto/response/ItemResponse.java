@@ -1,4 +1,4 @@
-package com.web.site.item.domain.dto;
+package com.web.site.item.domain.dto.response;
 
 import com.web.site.item.domain.entity.Item;
 import io.swagger.v3.oas.annotations.media.Schema;

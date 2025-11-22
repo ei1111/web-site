@@ -1,8 +1,8 @@
 package com.web.site.item.controller.api;
 
 
-import com.web.site.item.domain.dto.ItemRequest;
-import com.web.site.item.domain.dto.ItemResponse;
+import com.web.site.item.domain.dto.reqeust.ItemRequest;
+import com.web.site.item.domain.dto.response.ItemResponse;
 import com.web.site.item.service.ItemSerivce;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,6 +1,6 @@
 package com.web.site.payment.util;
 
-import com.web.site.payment.portOneUrl.PortOneUrl;
+import com.web.site.global.common.enums.PortOneUrl;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

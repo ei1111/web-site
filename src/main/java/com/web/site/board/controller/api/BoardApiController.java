@@ -1,9 +1,9 @@
 package com.web.site.board.controller.api;
 
 
-import com.web.site.board.domain.dto.BoardPageResponse;
-import com.web.site.board.domain.dto.BoardRequest;
-import com.web.site.board.domain.dto.BoardResponse;
+import com.web.site.board.domain.dto.response.BoardPageResponse;
+import com.web.site.board.domain.dto.request.BoardRequest;
+import com.web.site.board.domain.dto.response.BoardResponse;
 import com.web.site.board.service.BoardService;
 import com.web.site.global.audit.logging.LogExecutionTime;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;

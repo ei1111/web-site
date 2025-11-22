@@ -1,10 +1,9 @@
-package com.web.site.board.domain.dto;
+package com.web.site.board.domain.dto.request;
 
 import com.web.site.board.domain.entity.Board;
 import com.web.site.member.domain.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

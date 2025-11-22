@@ -1,4 +1,4 @@
-package com.web.site.payment.form;
+package com.web.site.payment.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;

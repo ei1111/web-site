@@ -3,8 +3,8 @@ package com.web.site.payment.service;
 
 import com.web.site.order.domain.entity.Order;
 import com.web.site.order.repository.OrderRepository;
-import com.web.site.payment.entity.Payment;
-import com.web.site.payment.form.PaymentRequest;
+import com.web.site.payment.domain.entity.Payment;
+import com.web.site.payment.domain.dto.request.PaymentRequest;
 import com.web.site.payment.repository.PaymentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

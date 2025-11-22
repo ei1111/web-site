@@ -1,4 +1,4 @@
-package com.web.site.member.domain.dto;
+package com.web.site.member.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.site.global.enums.Role;

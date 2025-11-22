@@ -1,4 +1,4 @@
-package com.web.site.payment.portOneUrl;
+package com.web.site.global.common.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

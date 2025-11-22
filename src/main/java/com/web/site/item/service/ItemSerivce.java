@@ -3,8 +3,8 @@ package com.web.site.item.service;
 
 import com.web.site.global.redis.RedisKeyPrefix;
 import com.web.site.global.redis.RedisManager;
-import com.web.site.item.domain.dto.ItemRequest;
-import com.web.site.item.domain.dto.ItemResponse;
+import com.web.site.item.domain.dto.reqeust.ItemRequest;
+import com.web.site.item.domain.dto.response.ItemResponse;
 import com.web.site.item.domain.entity.Item;
 import com.web.site.item.repository.ItemRepository;
 import jakarta.validation.Valid;

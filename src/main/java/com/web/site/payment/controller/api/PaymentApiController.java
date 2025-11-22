@@ -1,8 +1,8 @@
 package com.web.site.payment.controller.api;
 
 
-import com.web.site.payment.entity.Payment;
-import com.web.site.payment.form.PaymentRequest;
+import com.web.site.payment.domain.entity.Payment;
+import com.web.site.payment.domain.dto.request.PaymentRequest;
 import com.web.site.payment.service.PaymentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
