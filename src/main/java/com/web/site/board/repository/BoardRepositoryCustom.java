@@ -6,7 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.web.site.board.domain.dto.response.BoardResponse;
-import com.web.site.board.domain.dto.QBoardResponse;
+import com.web.site.board.domain.dto.response.QBoardResponse;
 import com.web.site.board.domain.entity.QBoard;
 import com.web.site.member.domain.entity.QMember;
 import java.util.List;

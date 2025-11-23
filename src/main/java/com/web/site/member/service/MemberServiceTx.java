@@ -1,6 +1,6 @@
 package com.web.site.member.service;
 
-import com.web.site.global.error.CustomException;
+import com.web.site.global.error.BusinessException;
 import com.web.site.global.error.ErrorCode;
 import com.web.site.member.domain.dto.reqeust.MemberModifyRequest;
 import com.web.site.member.domain.dto.reqeust.MemberRequest;
@@ -30,12 +30,12 @@ public class MemberServiceTx {
         String userId = request.getUserId();
 
         if (memberRepository.existsByUserId(userId)) {
-            throw new CustomException(ErrorCode.EXIST_USER_ID);
+            throw new BusinessException(ErrorCode.EXIST_USER_ID);
         }
 
         String email = request.getEmail();
         if (memberRepository.existsByEmail(email)) {
-            throw new CustomException(ErrorCode.EXIST_EMAIL);
+            throw new BusinessException(ErrorCode.EXIST_EMAIL);
         }
     }
 
@@ -54,6 +54,6 @@ public class MemberServiceTx {
 
     public Member getMemberEntityByUserId(String userId) {
         return memberRepository.findByUserId(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     }
 }

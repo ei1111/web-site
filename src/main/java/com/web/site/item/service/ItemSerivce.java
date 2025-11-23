@@ -10,6 +10,7 @@ import com.web.site.item.repository.ItemRepository;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional(readOnly = true)
 public class ItemSerivce {
     private final ItemRepository itemRepository;
-    private static final String UPLOAD_PATH = "/Users/manjae/Documents/personal-project/site/upload/";
     private final RedisManager redisManager;
 
     @Transactional
@@ -73,15 +73,18 @@ public class ItemSerivce {
         // 1. 저장할 파일명 생성 (파일명이 겹치지 않도록 UUID 추가)
         String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
 
+        // 현재 프로젝트 경로
+        String uploadDir = Paths.get("").toAbsolutePath() + "/upload/";
+
         // 2. 저장할 경로 지정 (예: C:/upload)
-        File dir = new File(UPLOAD_PATH);
+        File dir = new File(uploadDir);
 
         // 👉 디렉토리 없으면 생성
         if (!dir.exists()) {
             dir.mkdirs(); // mkdirs()는 하위 폴더까지 모두 생성
         }
 
-        File uploadFile = new File(UPLOAD_PATH + fileName);
+        File uploadFile = new File(uploadDir + fileName);
 
         // 3. 파일 저장
         try {

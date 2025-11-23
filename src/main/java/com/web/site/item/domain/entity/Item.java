@@ -3,7 +3,7 @@ package com.web.site.item.domain.entity;
 
 
 import com.web.site.global.audit.BaseEntity;
-import com.web.site.global.error.CustomException;
+import com.web.site.global.error.BusinessException;
 import com.web.site.global.error.ErrorCode;
 import com.web.site.item.domain.dto.reqeust.ItemRequest;
 import jakarta.persistence.Column;
@@ -96,7 +96,7 @@ public class Item extends BaseEntity {
         int reultStock = this.stockQuantity - count;
 
         if (reultStock < 0) {
-            throw new CustomException(ErrorCode.INVALID_INPUT_VALUE);
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
 
         this.stockQuantity -= count;

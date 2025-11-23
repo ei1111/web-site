@@ -1,6 +1,6 @@
 package com.web.site.member.service;
 
-import com.web.site.global.error.CustomException;
+import com.web.site.global.error.BusinessException;
 import com.web.site.global.error.ErrorCode;
 import com.web.site.member.domain.dto.response.MemberResponse;
 import com.web.site.member.domain.entity.Member;
@@ -29,6 +29,6 @@ public class MemberService {
     }
 
     public Member getMemberEntityByUserId(String userId) {
-        return memberRepository.findByUserId(userId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        return memberRepository.findByUserId(userId).orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     }
 }
