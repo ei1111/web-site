@@ -6,6 +6,7 @@ import com.web.site.member.domain.dto.response.MemberResponse;
 import com.web.site.member.domain.entity.Member;
 import com.web.site.member.repository.MemberRepository;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +23,18 @@ public class MemberService {
 
 
     public List<MemberResponse> findAll() {
+        int count = getAtomicInteger();
+
         return memberRepository.findAll()
                 .stream()
-                .map(MemberResponse::from)
+                .map(member -> MemberResponse.from(member, count))
                 .toList();
+    }
+
+    private int getAtomicInteger() {
+        AtomicInteger count = new AtomicInteger(0);
+        count.getAndIncrement();
+        return count.get();
     }
 
     public Member getMemberEntityByUserId(String userId) {

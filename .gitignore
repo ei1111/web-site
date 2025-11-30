@@ -41,3 +41,6 @@ local.env
 
 ## 사진 ###
 /upload/**
+
+##docker-compose##
+.docker-infra/**

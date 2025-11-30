@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.site.global.enums.Role;
 import com.web.site.member.domain.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.concurrent.atomic.AtomicInteger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,9 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(description = "회원 가입 response")
 public class MemberResponse {
+    @Schema(description = "순번" , example = "1")
+    private int count;
+
     @Schema(description = "아이디" , example = "ADMIN")
     private String userId;
 
@@ -38,8 +42,9 @@ public class MemberResponse {
     @Schema(description = "회원권한", example = "U")
     private Role role;
 
-    public static MemberResponse from(Member member) {
+    public static MemberResponse from(Member member,  int counter) {
         return new MemberResponse(
+                counter,
                 member.getUserId(),
                 member.getName(),
                 member.getEmail(),
