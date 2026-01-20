@@ -2,12 +2,16 @@ package com.web.site.global.common.config.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Slf4j
 public class Sha512PasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
-        return hashedSha512(rawPassword.toString());
+        String encode = hashedSha512(rawPassword.toString());
+        log.info("encode = {}" , encode);
+        return encode;
     }
 
     @Override

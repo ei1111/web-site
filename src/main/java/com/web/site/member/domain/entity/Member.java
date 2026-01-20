@@ -17,9 +17,11 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Comment;
 import org.springframework.util.StringUtils;
 
+@Slf4j
 @Getter
 @Entity
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -83,17 +85,23 @@ public class Member extends BaseTimeEntity {
     }
 
     public void update(MemberModifyRequest request, String password) {
+        String name = request.getName();
+
+        if (StringUtils.hasText(name)) {
+            this.name = name;
+        }
+
+        String email = request.getEmail();
+
+        if (StringUtils.hasText(email)) {
+            this.email = email;
+        }
+
         if (StringUtils.hasText(password)) {
             this.password = password;
         }
 
-        if (StringUtils.hasText(request.getName())) {
-            this.name = request.getName();
-        }
-
-        if (StringUtils.hasText(request.getEmail())) {
-            this.email = request.getEmail();
-        }
+        address.updateAddress(request);
     }
 
     public MemberResponse toResponse() {

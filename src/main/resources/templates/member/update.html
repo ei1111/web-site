@@ -35,6 +35,24 @@
     <input id="password" name="password" type="text" class="form-control">
   </div>
 
+  <div class="mb-3">
+    <label for="city" class="form-label">도시</label>
+    <input id="city" name="city" type="text" class="form-control">
+  </div>
+
+
+  <div class="mb-3">
+    <label for="street" class="form-label">거리</label>
+    <input id="street" name="street" type="text" class="form-control">
+  </div>
+
+
+  <div class="mb-3">
+    <label for="zipcode" class="form-label">zipcode</label>
+    <input id="zipcode" name="zipcode" type="text" class="form-control">
+  </div>
+
+
   <button id="updateBtn" type="button"  class="btn btn-success float-end w-20 mt-4 me-0 btn-sm">
     회원수정
   </button>
@@ -55,6 +73,9 @@
 
         document.getElementById('name').value = member.name;
         document.getElementById('email').value = member.email;
+        document.getElementById('city').value = member.city;
+        document.getElementById('street').value = member.street;
+        document.getElementById('zipcode').value = member.zipcode;
       } else {
         alert('회원 정보를 불러올 수 없습니다');
       }
@@ -69,8 +90,11 @@
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const city = document.getElementById('city').value;
+    const street = document.getElementById('street').value;
+    const zipcode = document.getElementById('zipcode').value;
 
-    const payload = {name , email, password}; // 변경할 정보만 포함
+    const payload = {name , email, password, city, street, zipcode}; // 변경할 정보만 포함
    try {
       const res = await fetch(`/api/v1/members`, {
         method: 'PUT',
