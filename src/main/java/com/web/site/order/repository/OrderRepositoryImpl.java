@@ -17,18 +17,20 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
+    private QOrder order = QOrder.order;
+    private QMember member = QMember.member;
+
 
     @Override
-    public List<OrderResponse> orderSearch(OrderSearchRequest request) {
-        QOrder order = QOrder.order;
-        QMember member = QMember.member;
+    public List<OrderResponse> orderSearch(OrderSearchRequest request, String userId) {
+        Role role = findRoleByUserId(userId);
 
         return jpaQueryFactory.selectFrom(order)
                 .join(order.member, member)
                 .where(
-                        likeMember(request.getMemberName())
+                        applyRoleScope(role, userId)
                       , eqStatus(request.getOrderStatus())
-                      , eqMemberId()
+                      , likeMember(request.getMemberName())
                 )
                 .fetch()
                 .stream()
@@ -36,15 +38,30 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .toList();
     }
 
+    private Role findRoleByUserId(String userId) {
+        return jpaQueryFactory
+                .select(member.role)
+                .from(member)
+                .where(member.userId.eq(userId))
+                .fetchOne();
+    }
+
     private BooleanExpression likeMember(String memberName) {
-        return StringUtils.hasText(memberName) ? QMember.member.name.like(memberName) : null;
+        return StringUtils.hasText(memberName) ? QMember.member.name.contains(memberName) : null;
     }
 
     private BooleanExpression eqStatus(OrderStatus status) {
         return status != null ? QOrder.order.status.eq(status) : null;
     }
 
-    private BooleanExpression eqMemberId() {
-        return Role.ADMIN.equals(SecurityUtill.getUserId()) ? null : QMember.member.userId.eq(SecurityUtill.getUserId());
+    private BooleanExpression applyRoleScope(Role role, String userId) {
+        if (role == Role.ADMIN) {
+            return null;
+        }
+        return restrictToRequester(userId);
+    }
+
+    private BooleanExpression restrictToRequester(String userId) {
+        return member.userId.eq(userId);
     }
 }

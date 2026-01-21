@@ -69,11 +69,13 @@
                       <div class="d-flex align-items-center mb-3">
                         <label for="quantityInput" class="me-2 mb-0">수량</label>
                         <input type="number" id="quantityInput" class="form-control" value="1" min="1" style="width: 80px;">
+
+                           <h4 class="text-danger mb-3">재고: ${item.stockQuantity.toLocaleString()}개</h4>
                       </div>
 
                         <!-- 주문 버튼 -->
                          <div class="mt-auto text-end">
-                            <button class="btn btn-primary" onclick="orderItem(${item.id})">주문하기</button>
+                            <button class="btn btn-primary" onclick="orderItem(${item.id},  ${item.stockQuantity})">주문하기</button>
                         </div>
                     </div>
                     </div>
@@ -84,8 +86,13 @@
 
 
     // 주문 요청 함수
-    function orderItem(itemId) {
+    function orderItem(itemId, stockQuntity) {
         const quantity = document.getElementById('quantityInput').value;
+
+        if (quantity > stockQuntity) {
+            alert('수량이 재고보다 많습니다.');
+            return;
+        }
 
         if (quantity < 1) {
             alert('수량은 1개 이상이어야 합니다.');
@@ -111,7 +118,7 @@
         })
         .then(result => {
             alert('주문이 완료되었습니다!');
-            window.location.href = '/order/orderList';
+            window.location.href = '/view/itemList';
         })
         .catch(error => {
             console.error('주문 실패:', error);

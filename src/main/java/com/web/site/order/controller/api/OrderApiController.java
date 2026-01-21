@@ -1,6 +1,7 @@
 package com.web.site.order.controller.api;
 
 
+import com.web.site.member.domain.entity.CustomUserDetails;
 import com.web.site.order.domain.dto.request.OrderRequest;
 import com.web.site.order.domain.dto.request.OrderSearchRequest;
 import com.web.site.order.domain.dto.response.OrderResponse;
@@ -11,6 +12,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,15 +31,16 @@ public class OrderApiController {
 
     @PostMapping("/new")
     @Operation(summary = "주문 정보 등록 API")
-    public ResponseEntity<String> order(@Valid @RequestBody OrderRequest request) {
-        orderService.order(request.itemId(), request.count());
+    public ResponseEntity<String> order(@Valid @RequestBody OrderRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        orderService.order(request, userDetails.getUsername());
         return ResponseEntity.ok("order success");
     }
 
     @GetMapping("/list")
     @Operation(summary = "주문 정보 리스트 API")
-    public ResponseEntity<List<OrderResponse>> orderSearch(OrderSearchRequest orderSearch) {
-        return  ResponseEntity.ok(orderService.orderSearch(orderSearch));
+    public ResponseEntity<List<OrderResponse>> orderSearch(OrderSearchRequest orderSearch , @AuthenticationPrincipal CustomUserDetails userDetails) {
+        String userId = userDetails.getUsername();
+        return  ResponseEntity.ok(orderService.orderSearch(orderSearch, userId));
     }
 
     @PostMapping("/{orderId}/cancel")

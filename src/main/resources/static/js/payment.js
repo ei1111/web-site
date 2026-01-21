@@ -48,19 +48,22 @@ function paymentProcess(orderId, memberName, itemName ,price, count) {
           rsp.paymentDate = new Date().toISOString().split('T')[0];  // paymentDate를 현재 날짜로 설정 (yyyy-mm-dd 형식)
 
           console.log(rsp);
+          const token = localStorage.getItem("accessToken");
           // Send the payment details to your Spring Boot backend
           const response = await fetch('/payments/v1/save', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(rsp) // Send the response object
           });
 
           const result = await response.json();
           console.log(result)
+          console.log("stuats: " + rsp.status)
 
-          if (rsp.status == 200) { // DB저장 성공시
+          if (rsp.success == true) { // DB저장 성공시
             alert('결제 완료!')
             window.location.reload();
           } else { // 결제완료 후 DB저장 실패시

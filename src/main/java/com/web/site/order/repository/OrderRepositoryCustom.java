@@ -6,5 +6,5 @@ import com.web.site.order.domain.dto.response.OrderResponse;
 import java.util.List;
 
 public interface OrderRepositoryCustom {
-    List<OrderResponse> orderSearch(OrderSearchRequest request);
+    List<OrderResponse> orderSearch(OrderSearchRequest request, String userId);
 }

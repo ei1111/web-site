@@ -72,12 +72,19 @@
 </div> <!-- /container -->
 </body>
 <script>
+    const token = localStorage.getItem("accessToken");
+
     document.getElementById('searchForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const memberName = document.getElementById('memberName').value;
         const orderStatus = document.getElementById('orderStatus').value;
 
-        const res = await fetch(`/order/v1/list?memberName=${memberName}&orderStatus=${orderStatus}`);
+        const res = await fetch(`/order/v1/list?memberName=${memberName}&orderStatus=${orderStatus}`,
+            {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            }
+        );
         const orders = await res.json();
 
         const tbody = document.getElementById('orderTableBody');
@@ -104,7 +111,7 @@
         });
     });
 
-    const token = localStorage.getItem("accessToken");
+
 
     async function cancelOrder(orderId) {
         if (!confirm('정말 취소하시겠습니까?')) return;
