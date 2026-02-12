@@ -50,7 +50,7 @@ public class OrderItem {
         this.count = count;
     }
 
-    public void canel() {
+    public void cancel() {
         getItem().addStock(this.count);
     }
 }

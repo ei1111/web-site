@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     // 회원 관련 에러
-    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "회원을 찾을 수 없습니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "회원을 찾을 수 없습니다."),
     EXIST_EMAIL(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "이미 존재하는 이메일입니다."),
     EXIST_USER_ID(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "존재하는 아이디입니다."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "비밀번호가 일치하지 않습니다."),

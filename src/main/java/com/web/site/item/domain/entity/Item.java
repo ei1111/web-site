@@ -93,9 +93,9 @@ public class Item extends BaseEntity {
     }
 
     public void removeStock(int count) {
-        int reultStock = this.stockQuantity - count;
+        int resultStock = this.stockQuantity - count;
 
-        if (reultStock < 0) {
+        if (resultStock < 0) {
             throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
         }
 

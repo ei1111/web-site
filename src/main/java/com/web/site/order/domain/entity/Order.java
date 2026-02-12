@@ -92,7 +92,7 @@ public class Order extends BaseEntity {
         this.status = OrderStatus.CANCEL;
 
         for (OrderItem orderItem : orderItems) {
-            orderItem.canel();
+            orderItem.cancel();
         }
     }
 

@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ItemSerivce {
+public class ItemService {
     private final ItemRepository itemRepository;
     private final RedisManager redisManager;
 
