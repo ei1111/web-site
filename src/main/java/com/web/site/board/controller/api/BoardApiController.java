@@ -52,23 +52,19 @@ public class BoardApiController {
 
     @PostMapping("/form")
     @Operation(summary = "게시판 글 등록 API" , description = "게시판 글 등록 API")
-    public void save(@Valid @RequestBody BoardRequest board, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String userId = userDetails.getUsername();
+    public void save(@Valid @RequestBody BoardRequest board, @AuthenticationPrincipal(expression = "username") String userId) {
         boardService.save(board, userId);
     }
 
     @PutMapping("/form")
     @Operation(summary = "게시판 글 수정 API", description = "게시판 글 수정 API")
-    public void update(@RequestBody BoardRequest board, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String userId = userDetails.getUsername();
+    public void update(@RequestBody BoardRequest board, @AuthenticationPrincipal(expression = "username") String userId) {
         boardService.update(board, userId);
     }
 
     @DeleteMapping("/form")
     @Operation(summary = "게시판 글 삭제 API", description = "게시판 글 삭제 API")
-    public ResponseEntity<Void> delete(@RequestParam(required = false) @Parameter(example = "1") Long boardId, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String userId = userDetails.getUsername();
+    public void delete(@RequestParam(required = false) @Parameter(example = "1") Long boardId, @AuthenticationPrincipal(expression = "username") String userId) {
         boardService.delete(boardId, userId);
-        return ResponseEntity.noContent().build();
     }
 }

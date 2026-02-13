@@ -280,12 +280,17 @@
     }
 
     // Next
-    const nextDisabled = currentPage + 1 >= totalPages ? 'disabled' : '';
+    const isLastPage = currentPage === totalPages - 1;
+
     pagination.innerHTML += `
-      <li class="page-item ${nextDisabled}">
-        <a class="page-link" href="#" onclick="loadBoardList(${currentPage + 1}, '${searchText}')">Next</a>
-      </li>
-    `;
+  <li class="page-item ${isLastPage ? 'disabled' : ''}">
+    <button type="button"
+            class="page-link"
+            ${isLastPage ? 'disabled' : `onclick="loadBoardList(${currentPage + 1}, '${searchText}')"`}>
+        Next
+    </button>
+  </li>
+`;
   }
 </script>
 <script th:src="@{/js/navbar.js}"></script>

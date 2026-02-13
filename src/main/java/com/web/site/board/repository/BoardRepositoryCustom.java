@@ -26,7 +26,7 @@ public class BoardRepositoryCustom {
     private final QBoard board = QBoard.board;
     private final QMember member = QMember.member;
 
-    public Page<BoardResponse> findByTitleContainingOrContentContaining(String serachWord, Pageable pageable) {
+    public Page<BoardResponse> findByTitleContainingOrContentContaining(String searchWord, Pageable pageable) {
 
         AtomicInteger index = new AtomicInteger((int) pageable.getOffset() + 1);
 
@@ -41,7 +41,7 @@ public class BoardRepositoryCustom {
                 )
                 .from(board)
                 .leftJoin(board.member, member)
-                .where(titleEq(serachWord))
+                .where(titleEq(searchWord))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(board.createdDate.desc())
@@ -54,9 +54,7 @@ public class BoardRepositoryCustom {
                 .select(board.count())
                 .from(board)
                 .leftJoin(board.member, member)
-                .where(titleEq(serachWord))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .where(titleEq(searchWord));
 
         return PageableExecutionUtils.getPage(boardResponse, pageable, countQuery::fetchCount);
     }

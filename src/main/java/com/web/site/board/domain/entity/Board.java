@@ -43,9 +43,6 @@ public class Board extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @Column(nullable = false)
-    private int viewCount = 0;
-
     private Board(String title, String content, Member member) {
         this.title = title;
         this.content = content;
@@ -56,22 +53,17 @@ public class Board extends BaseEntity {
         return new Board(title, content, member);
     }
 
-    public boolean isWriter(String userId) {
-        return getUserId().equals(userId);
-    }
-
-    public void increaseViewCount() {
-        this.viewCount++;
-    }
-
     public String getUserId() {
         return member.getUserId();
     }
 
+    public boolean isWriter(String userId) {
+        return getUserId().equals(userId);
+    }
 
     public void update(BoardRequest boardRequest) {
-        String reqtitle = boardRequest.getTitle();
-        String reqContent = boardRequest.getContent();
+        String reqtitle = boardRequest.title();
+        String reqContent = boardRequest.content();
 
         if (StringUtils.hasText(reqtitle)) {
             this.title = reqtitle;

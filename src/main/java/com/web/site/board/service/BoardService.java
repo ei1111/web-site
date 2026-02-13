@@ -39,7 +39,6 @@ public class BoardService {
         return Optional.ofNullable(redisGet(id))
                 .orElseGet(() -> {
                     Board board = getBoardEntity(id);
-                    board.increaseViewCount();
                     BoardResponse response = Board.toResponse(board);
                     redisSet(id, response);
                     return response;
@@ -62,22 +61,22 @@ public class BoardService {
     @Transactional
     public Board save(BoardRequest boardRequest, String userId) {
         Member member = memberService.getMemberEntityByUserId(userId);
-        String title = boardRequest.getTitle();
-        String content = boardRequest.getContent();
+        String title = boardRequest.title();
+        String content = boardRequest.content();
         Board board = Board.create(title, content, member);
         return boardRepository.save(board);
     }
 
     @Transactional
     public void update(BoardRequest boardRequest, String userId) {
-        Board board = getBoardEntity(boardRequest.getBoardId());
+        Board board = getBoardEntity(boardRequest.boardId());
 
         if (!board.isWriter(userId)) {
             throw new BusinessException(ErrorCode.FORBIDDEN);
         }
 
         board.update(boardRequest);
-        redisSet(boardRequest.getBoardId(), Board.toResponse(board));
+        redisSet(boardRequest.boardId(), Board.toResponse(board));
     }
 
     @Transactional

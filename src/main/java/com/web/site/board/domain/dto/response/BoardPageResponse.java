@@ -18,11 +18,13 @@ public class BoardPageResponse {
     private int pageNumber;
     private int startPage;
     private int endPage;
+    private int totalPages;
     private long totalCount;
     private List<BoardResponse> boards;
 
     public BoardPageResponse(Page<BoardResponse> boardResponse) {
         this.pageNumber = boardResponse.getNumber();
+        this.totalPages = boardResponse.getTotalPages();
         this.startPage = Math.max(1, pageNumber - 4);
         this.endPage = Math.min(boardResponse.getTotalPages(), pageNumber + 4);
         this.totalCount = boardResponse.getTotalElements();
