@@ -12,11 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const itemListMenu = document.getElementById("itemListMenu");
 
   if (token) {
+    const payload = parseJwt(token);
+    const role = payload?.role;
+    console.log("payload", payload);
+    console.log("role", role);
+
     // 로그인 상태이면 로그인 메뉴 숨기기, 로그아웃/마이페이지 보이기
     if (loginMenu) loginMenu.style.display = "none";
     if (logoutMenu) logoutMenu.style.display = "block";
     if (mypageMenu) mypageMenu.style.display = "block";
-    if (memberListMenu) memberListMenu.style.display = "block";
+
+    if (role === "ADMIN") {
+      if (memberListMenu) memberListMenu.style.display = "block";
+    } else {
+      if (memberListMenu) memberListMenu.style.display = "none";
+    }
+
     if (itemListMenu) itemListMenu.style.display = "block";
     if (orderListMenu) orderListMenu.style.display = "block";
     if (adminMenu) adminMenu.style.display = "block";
@@ -46,3 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+function parseJwt(token) {
+  try {
+    const base64Payload = token.split('.')[1]; // payload 부분만 추출
+    const payload = atob(base64Payload);       // base64 → 문자열
+    return JSON.parse(payload);               // JSON 객체 변환
+  } catch (e) {
+    return null;
+  }
+}
