@@ -1,11 +1,10 @@
-package com.web.site.delivery.domain.entity;
+package com.web.site.order.domain.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 
 import com.web.site.global.common.enums.DeliveryStatus;
 import com.web.site.member.domain.entity.Address;
-import com.web.site.order.domain.entity.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

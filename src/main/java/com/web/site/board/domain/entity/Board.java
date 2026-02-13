@@ -43,12 +43,29 @@ public class Board extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Column(nullable = false)
+    private int viewCount = 0;
 
-    @Builder
-    public Board(String title, String content, Member member) {
+    private Board(String title, String content, Member member) {
         this.title = title;
         this.content = content;
         this.member = member;
+    }
+
+    public static Board create(String title, String content, Member member) {
+        return new Board(title, content, member);
+    }
+
+    public boolean isWriter(String userId) {
+        return getUserId().equals(userId);
+    }
+
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
+    public String getUserId() {
+        return member.getUserId();
     }
 
 
@@ -65,11 +82,12 @@ public class Board extends BaseEntity {
         }
     }
 
-    public BoardResponse toResponse() {
+    public static BoardResponse toResponse(Board board) {
         return BoardResponse.builder()
-                .boardId(this.id)
-                .title(this.title)
-                .content(this.content)
+                .boardId(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .userId(board.getUserId())
                 .build();
     }
 }

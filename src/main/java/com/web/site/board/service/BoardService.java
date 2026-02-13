@@ -8,6 +8,8 @@ import com.web.site.board.domain.dto.response.BoardResponse;
 import com.web.site.board.repository.BoardRepository;
 import com.web.site.board.repository.BoardRepositoryCustom;
 import com.web.site.global.common.util.SecurityUtill;
+import com.web.site.global.error.BusinessException;
+import com.web.site.global.error.ErrorCode;
 import com.web.site.global.redis.RedisKeyPrefix;
 import com.web.site.global.redis.RedisManager;
 import com.web.site.member.domain.entity.Member;
@@ -37,14 +39,16 @@ public class BoardService {
         return Optional.ofNullable(redisGet(id))
                 .orElseGet(() -> {
                     Board board = getBoardEntity(id);
-                    BoardResponse boardResponse = board.toResponse();
-                    redisSet(id, boardResponse);
-                    return boardResponse;
+                    board.increaseViewCount();
+                    BoardResponse response = Board.toResponse(board);
+                    redisSet(id, response);
+                    return response;
                 });
     }
 
     private Board getBoardEntity(Long id) {
-        return boardRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
     }
 
     private BoardResponse redisGet(Long id) {
@@ -56,16 +60,35 @@ public class BoardService {
     }
 
     @Transactional
-    public Board save(BoardRequest boardRequest) {
-        String userId = SecurityUtill.getUserId();
+    public Board save(BoardRequest boardRequest, String userId) {
         Member member = memberService.getMemberEntityByUserId(userId);
-        return boardRepository.save(boardRequest.from(member));
+        String title = boardRequest.getTitle();
+        String content = boardRequest.getContent();
+        Board board = Board.create(title, content, member);
+        return boardRepository.save(board);
     }
 
     @Transactional
-    public void update(BoardRequest boardRequest) {
+    public void update(BoardRequest boardRequest, String userId) {
         Board board = getBoardEntity(boardRequest.getBoardId());
+
+        if (!board.isWriter(userId)) {
+            throw new BusinessException(ErrorCode.FORBIDDEN);
+        }
+
         board.update(boardRequest);
-        redisSet(boardRequest.getBoardId(), board.toResponse());
+        redisSet(boardRequest.getBoardId(), Board.toResponse(board));
+    }
+
+    @Transactional
+    public void delete(Long boardId, String userId) {
+        Board board = getBoardEntity(boardId);
+
+        if (!board.isWriter(userId)) {
+            throw new BusinessException(ErrorCode.FORBIDDEN);
+        }
+
+        boardRepository.delete(board);
+        redisManager.delete(RedisKeyPrefix.BOARD_DETAIL, boardId);
     }
 }

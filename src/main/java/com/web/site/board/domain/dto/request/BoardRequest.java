@@ -27,12 +27,4 @@ public class BoardRequest {
     @Schema(description = "내용")
     @NotBlank(message = "내용은 필수 입니다.")
     private String content;
-
-    public Board from(Member member) {
-        return Board.builder()
-                .content(this.content)
-                .title(this.title)
-                .member(member)
-                .build();
-    }
 }

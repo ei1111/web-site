@@ -1,12 +1,11 @@
 package com.web.site.order.service;
 
 
-import com.web.site.delivery.domain.entity.Delivery;
+import com.web.site.order.domain.entity.Delivery;
 import com.web.site.global.redis.RedisKeyPrefix;
 import com.web.site.global.redis.RedisManager;
 import com.web.site.item.domain.entity.Item;
 import com.web.site.item.repository.ItemRepository;
-import com.web.site.item.service.ItemSerivce;
 import com.web.site.member.domain.entity.Member;
 import com.web.site.member.repository.MemberRepository;
 import com.web.site.order.domain.dto.request.OrderRequest;

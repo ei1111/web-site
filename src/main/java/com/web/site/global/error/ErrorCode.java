@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     // 회원 관련 에러
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "회원을 찾을 수 없습니다."),
-    EXIST_EMAIL(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "이미 존재하는 이메일입니다."),
-    EXIST_USER_ID(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "존재하는 아이디입니다."),
-    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "비밀번호가 일치하지 않습니다."),
+    EXIST_EMAIL(HttpStatus.BAD_REQUEST, "EXIST_EMAIL", "이미 존재하는 이메일입니다."),
+    EXIST_USER_ID(HttpStatus.BAD_REQUEST, "EXIST_ID", "존재하는 아이디입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "MISS_MATCH_PW", "비밀번호가 일치하지 않습니다."),
 
     // 인증 관련 에러
     UNAUTHORIZED(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "인증되지 않은 접근입니다."),
@@ -18,6 +18,12 @@ public enum ErrorCode {
 
     // 권한 관련 에러 (3000번대)
     ACCESS_DENIED(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "접근 권한이 없습니다."),
+
+
+    // 게시글 관한 에러
+    FORBIDDEN(HttpStatus.FORBIDDEN, "FORBIDDEN", "본인이 작성한 글이 아닙니다."),
+    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND", "게시글을 찾을 수 없습니다."),
+
 
     // 입력값 검증 에러 (4000번대)
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "BAD_REQUEST", "잘못된 입력값입니다."),

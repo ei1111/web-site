@@ -104,6 +104,7 @@
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">작성자</th>
+        <th scope="col">관리</th>
       </tr>
       </thead>
       <tbody id="boardTableBody">
@@ -125,20 +126,49 @@
 
 <script th:inline="javascript">
   const token = localStorage.getItem("accessToken");
+  let currentUserId = null;
+  let currentSearchText = '';
+  let currentPage = 0;
 
-  document.addEventListener("DOMContentLoaded", function () {
-    loadBoardList(); // 초기 목록 불러오기
+  document.addEventListener("DOMContentLoaded", async function () {
+    // 순차적으로 실행: 먼저 사용자 정보 로드 → 그 다음 게시글 목록 로드
+    await getCurrentUser();
+    loadBoardList();
 
-    // 🔍 검색 이벤트
+    // 검색 이벤트
     document.getElementById("searchForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      const keyword = document.getElementById("searchText").value;
-      loadBoardList(0, keyword); // 검색 시 0페이지부터
+      currentSearchText = document.getElementById("searchText").value;
+      currentPage = 0;
+      loadBoardList(currentPage, currentSearchText);
     });
   });
 
-  // 📦 게시글 로딩 + 페이징 처리
+  // 현재 로그인한 사용자 정보 가져오기 (async/await 사용)
+  async function getCurrentUser() {
+    try {
+      const response = await fetch('/api/v1/members/me', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        currentUserId = data.userId;
+      }
+    } catch (error) {
+      console.error('사용자 정보 불러오기 실패:', error);
+    }
+  }
+
+  // 게시글 로딩 + 페이징 처리
   function loadBoardList(page = 0, searchText = '') {
+    currentPage = page;
+    currentSearchText = searchText;
+
     const url = new URL('/api/v1/list', window.location.origin);
     url.searchParams.append('page', page);
     if (searchText) {
@@ -167,28 +197,65 @@
     });
   }
 
-  // 📊 총 건수 표시
+  // 총 건수 표시
   function renderTotalCount(count) {
     document.getElementById('totalCount').innerText = count;
   }
 
-  // 📄 게시글 테이블 렌더링
+  // 게시글 테이블 렌더링
   function renderBoardTable(boards) {
     const tbody = document.getElementById('boardTableBody');
     tbody.innerHTML = '';
 
     boards.forEach(board => {
       const tr = document.createElement('tr');
+
+      // 작성자 확인 (currentUserId가 로드된 후에만 비교)
+      const isAuthor = currentUserId && board.userId === currentUserId;
+
+      const deleteButton = isAuthor
+          ? `<button class="btn btn-danger btn-sm" onclick="deleteBoard(${board.boardId})">삭제</button>`
+          : '';
+
       tr.innerHTML = `
         <td>${board.rowNum}</td>
         <td><a href="/view/write?boardId=${board.boardId}">${board.title}</a></td>
         <td>${board.userId}</td>
+        <td>${deleteButton}</td>
       `;
       tbody.appendChild(tr);
     });
   }
 
-  // ⏩ 페이지네이션 렌더링
+  // 게시글 삭제
+  function deleteBoard(boardId) {
+    if (!confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+
+    fetch(`/api/v1/form?boardId=${boardId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('삭제되었습니다.');
+        loadBoardList(currentPage, currentSearchText);
+      } else {
+        return response.json().then(err => {
+          throw new Error(err.message || '삭제 실패');
+        });
+      }
+    })
+    .catch(error => {
+      alert('삭제 중 오류가 발생했습니다: ' + error.message);
+      console.error('삭제 실패:', error);
+    });
+  }
+
+  // 페이지네이션 렌더링
   function renderPagination(currentPage, totalPages, startPage, endPage, searchText = '') {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';

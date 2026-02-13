@@ -11,7 +11,6 @@ import lombok.Setter;
 
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -29,5 +28,9 @@ public class BoardResponse {
         this.title = title;
         this.content = content;
         this.userId = userId;
+    }
+
+    public void setRowNum(Integer rowNum) {  // package-private
+        this.rowNum = rowNum;
     }
 }

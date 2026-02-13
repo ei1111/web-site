@@ -2,7 +2,6 @@ package com.web.site.order.domain.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.web.site.delivery.domain.entity.Delivery;
 import com.web.site.global.audit.BaseEntity;
 import com.web.site.global.common.enums.DeliveryStatus;
 import com.web.site.global.common.enums.OrderStatus;
