@@ -115,31 +115,41 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${menu} == 'home' ? 'active'" href="/index">홈</a>
+          <a class="nav-link" th:classappend="${menu} == 'home' ? 'active'" href="/index" th:text="#{menu.index}">홈</a>
         </li>
         <li class="nav-item" id="loginMenu">
-          <a class="nav-link" th:classappend="${menu}=='login'?'active'" href="/view/login">로그인</a>
+          <a class="nav-link" th:classappend="${menu}=='login'?'active'" href="/view/login" th:text="#{menu.login}">로그인</a>
         </li>
         <li class="nav-item" id="mypageMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu}=='detail'?'active'" href="/view/detail">마이 페이지</a>
+          <a class="nav-link" th:classappend="${menu}=='detail'?'active'" href="/view/detail" th:text="#{menu.detail}">마이 페이지</a>
         </li>
         <li class="nav-item" id="memberListMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu} == 'memberList' ? 'active'" href="/view/memberList">회원리스트</a>
+          <a class="nav-link" th:classappend="${menu} == 'memberList' ? 'active'" href="/view/memberList" th:text="#{menu.memberList}">회원리스트</a>
         </li>
         <li class="nav-item" id="boardListMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu} == 'boardList' ? 'active'" href="/view/boardList">게시판</a>
+          <a class="nav-link" th:classappend="${menu} == 'boardList' ? 'active'" href="/view/boardList" th:text="#{menu.boardList}">게시판</a>
         </li>
         <li class="nav-item" id="itemRegistMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu} == 'itemRegister' ? 'active'" href="/view/itemRegister">상품등록</a>
+          <a class="nav-link" th:classappend="${menu} == 'itemRegister' ? 'active'" href="/view/itemRegister" th:text="#{menu.itemRegister}">상품등록</a>
         </li>
         <li class="nav-item" id="itemListMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu} == 'itemList' ? 'active'" href="/view/itemList">상품리스트</a>
+          <a class="nav-link" th:classappend="${menu} == 'itemList' ? 'active'" href="/view/itemList" th:text="#{menu.itemList}">상품리스트</a>
         </li>
         <li class="nav-item" id="orderListMenu" style="display:none">
-          <a class="nav-link" th:classappend="${menu} == 'orderList' ? 'active'" href="/view/orderList">상품주문리스트</a>
+          <a class="nav-link" th:classappend="${menu} == 'orderList' ? 'active'" href="/view/orderList" th:text="#{menu.orderList}">상품주문리스트</a>
         </li>
         <li class="nav-item" id="logoutMenu" style="display:none">
-          <a class="nav-link" href="#" id="logoutBtn">로그아웃</a>
+          <a class="nav-link" href="#" id="logoutBtn" th:text="#{menu.logout}">로그아웃</a>
+        </li>
+        <!-- 언어 선택 드롭다운 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            🌐 <span th:text="#{menu.language}">Language</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="?lang=ko">한국어 (KR)</a></li>
+            <li><a class="dropdown-item" href="?lang=en">English (EN)</a></li>
+          </ul>
         </li>
       </ul>
     </div>

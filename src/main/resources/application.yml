@@ -6,7 +6,11 @@ spring:
   messages:
     basename: messages
     encoding: UTF-8
-    cache-duration: 3600
+    cache-duration: -1
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 ---
 spring:
   config:

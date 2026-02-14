@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (token) {
     const payload = parseJwt(token);
     const role = payload?.role;
-    console.log("payload", payload);
-    console.log("role", role);
 
     // 로그인 상태이면 로그인 메뉴 숨기기, 로그아웃/마이페이지 보이기
     if (loginMenu) loginMenu.style.display = "none";
@@ -24,15 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (role === "ADMIN") {
       if (memberListMenu) memberListMenu.style.display = "block";
+      if (itemRegistMenu) itemRegistMenu.style.display = "block";
     } else {
       if (memberListMenu) memberListMenu.style.display = "none";
+      if (itemRegistMenu) itemRegistMenu.style.display = "none";
     }
 
     if (itemListMenu) itemListMenu.style.display = "block";
     if (orderListMenu) orderListMenu.style.display = "block";
     if (adminMenu) adminMenu.style.display = "block";
     if (boardListMenu) boardListMenu.style.display = "block";
-    if (itemRegistMenu) itemRegistMenu.style.display = "block";
   } else {
     // 로그아웃 상태이면 로그인 메뉴 보이기, 로그아웃/마이페이지 숨기기
     if (loginMenu) loginMenu.style.display = "block";

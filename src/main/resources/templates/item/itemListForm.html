@@ -182,8 +182,8 @@
         <!-- 헤더 영역 -->
         <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
-                <h2 class="mb-1 fw-bold">상품 목록</h2>
-                <p class="text-muted mb-0">ShopHub의 다양한 상품을 만나보세요</p>
+                <h2 class="mb-1 fw-bold" th:text="#{item.list}">상품 목록</h2>
+                <p class="text-muted mb-0" th:text="#{item.list.desc}">ShopHub의 다양한 상품을 만나보세요</p>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <!-- 필요 시 필터/정렬 버튼 등 추가 가능 -->
@@ -196,7 +196,7 @@
         </div>
 
         <!-- 빈 상태 메시지 -->
-        <div id="noItemsMessage" class="no-items" style="display: none;">
+        <div id="noItemsMessage" class="no-items" style="display: none;" th:text="#{item.no.items}">
             등록된 상품이 없습니다.
         </div>
 
@@ -255,6 +255,11 @@
 <!-- 상품 목록 불러오기 -->
 <script>
     const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        alert("로그인이 필요합니다.");
+        window.location.href = "/index";
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
         fetchItems();

@@ -213,12 +213,12 @@
     <!-- 헤더 영역 -->
     <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
       <div>
-        <h2 class="mb-1 fw-bold">게시판</h2>
-        <p class="text-muted mb-0">ShopHub 커뮤니티의 소통 공간</p>
+        <h2 class="mb-1 fw-bold" th:text="#{board.title}">게시판</h2>
+        <p class="text-muted mb-0" th:text="#{board.community.desc}">ShopHub 커뮤니티의 소통 공간</p>
       </div>
       <div class="d-flex align-items-center gap-3">
         <span class="fs-5 fw-bold" style="background: linear-gradient(135deg, var(--primary-start), var(--primary-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-          총 <span id="totalCount">0</span>건
+          <span th:text="#{board.total}">총</span> <span id="totalCount">0</span>건
         </span>
       </div>
     </div>
@@ -231,14 +231,14 @@
             class="form-control"
             id="searchText"
             name="searchText"
-            placeholder="제목 또는 내용 검색..."
+            th:placeholder="#{board.search.placeholder}"
         >
-        <button type="submit" class="btn px-4">
+        <button type="submit" class="btn px-4" th:text="#{button.search}">
           검색
         </button>
       </form>
 
-      <a th:href="@{/view/write}" class="btn btn-write">
+      <a th:href="@{/view/write}" class="btn btn-write" th:text="#{board.write}">
         글쓰기
       </a>
     </div>
@@ -248,10 +248,10 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th scope="col" style="width: 10%;">번호</th>
-          <th scope="col">제목</th>
-          <th scope="col" style="width: 18%;">작성자</th>
-          <th scope="col" style="width: 12%;">관리</th>
+          <th scope="col" style="width: 10%;" th:text="#{board.number}">번호</th>
+          <th scope="col" th:text="#{board.subject}">제목</th>
+          <th scope="col" style="width: 18%;" th:text="#{board.author}">작성자</th>
+          <th scope="col" style="width: 12%;" th:text="#{board.manage}">관리</th>
         </tr>
         </thead>
         <tbody id="boardTableBody"></tbody>

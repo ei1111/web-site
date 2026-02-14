@@ -199,54 +199,54 @@
     <div class="card card-signup">
 
       <div class="card-header">
-        <h2>회원가입</h2>
-        <p>간단하게 가입하고 특별한 쇼핑을 시작하세요</p>
+        <h2 th:text="#{member.register.title}">회원가입</h2>
+        <p th:text="#{member.register.desc}">간단하게 가입하고 특별한 쇼핑을 시작하세요</p>
       </div>
 
       <div class="card-body p-5">
         <form id="signupForm">
 
           <div class="mb-4">
-            <label for="userId" class="form-label">아이디</label>
-            <input type="text" class="form-control" id="userId" name="userId" placeholder="영문+숫자 6~20자" autocomplete="username" required>
+            <label for="userId" class="form-label" th:text="#{member.userId}">아이디</label>
+            <input type="text" class="form-control" id="userId" name="userId" th:placeholder="#{member.userId.rule}" autocomplete="username" required>
           </div>
 
           <div class="mb-4">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="8자 이상, 영문·숫자·특수문자 포함" autocomplete="new-password" required>
+            <label for="password" class="form-label" th:text="#{member.password}">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" th:placeholder="#{member.password.rule}" autocomplete="new-password" required>
           </div>
 
           <div class="mb-4">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="실명을 입력해주세요" autocomplete="name" required>
+            <label for="name" class="form-label" th:text="#{member.name}">이름</label>
+            <input type="text" class="form-control" id="name" name="name" th:placeholder="#{member.name.placeholder}" autocomplete="name" required>
           </div>
 
           <div class="mb-4">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="example@shophub.kr" autocomplete="email" required>
+            <label for="email" class="form-label" th:text="#{member.email}">이메일</label>
+            <input type="email" class="form-control" id="email" name="email" th:placeholder="#{member.email.placeholder}" autocomplete="email" required>
           </div>
 
           <div class="row g-3 mb-4">
             <div class="col-12 col-sm-6">
-              <label for="city" class="form-label">거주 도시</label>
-              <input type="text" class="form-control" id="city" name="city" placeholder="예: 서울" autocomplete="address-level1">
+              <label for="city" class="form-label" th:text="#{member.city}">거주 도시</label>
+              <input type="text" class="form-control" id="city" name="city" th:placeholder="#{member.city.placeholder}" autocomplete="address-level1">
             </div>
             <div class="col-12 col-sm-6">
-              <label for="zipcode" class="form-label">우편번호</label>
-              <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="12345" autocomplete="postal-code">
+              <label for="zipcode" class="form-label" th:text="#{member.zipcode}">우편번호</label>
+              <input type="text" class="form-control" id="zipcode" name="zipcode" th:placeholder="#{member.zipcode.placeholder}" autocomplete="postal-code">
             </div>
           </div>
 
           <div class="mb-4">
-            <label for="street" class="form-label">도로명 주소</label>
-            <input type="text" class="form-control" id="street" name="street" placeholder="상세 주소를 입력해주세요" autocomplete="street-address">
+            <label for="street" class="form-label" th:text="#{member.street}">도로명 주소</label>
+            <input type="text" class="form-control" id="street" name="street" th:placeholder="#{member.street.placeholder}" autocomplete="street-address">
           </div>
 
-          <button type="button" id="signupBtn" class="btn btn-signup w-100 mb-3 btn-lg">
+          <button type="button" id="signupBtn" class="btn btn-signup w-100 mb-3 btn-lg" th:text="#{member.register.complete}">
             회원가입 완료
           </button>
 
-          <button type="button" id="cancelBtn" class="btn btn-outline-secondary btn-cancel w-100 btn-lg">
+          <button type="button" id="cancelBtn" class="btn btn-outline-secondary btn-cancel w-100 btn-lg" th:text="#{button.cancel.back}">
             취소하고 돌아가기
           </button>
 

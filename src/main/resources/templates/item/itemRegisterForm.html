@@ -6,7 +6,7 @@
     <title>상품 목록 - ShopHub</title>
 
     <!-- fragments/common head 불러오기 -->
-    <th:block th:replace="~{fragments/common :: head('상품리스트')}"></th:block>
+    <th:block th:replace="~{fragments/common :: head('상품등록')}"></th:block>
 
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -206,7 +206,7 @@
 </div>
 
 <!-- Navbar -->
-<header th:replace="~{fragments/common :: menu('itemList')}"></header>
+<header th:replace="~{fragments/common :: menu('itemRegister')}"></header>
 
 <main class="flex-shrink-0">
     <div class="items-container">
@@ -214,10 +214,10 @@
         <!-- 헤더 영역 -->
         <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
-                <h2 class="mb-1 fw-bold">상품 목록</h2>
-                <p class="text-muted mb-0">등록된 모든 상품을 관리합니다</p>
+                <h2 class="mb-1 fw-bold" th:text="#{item.register.list}">상품 등록 목록</h2>
+                <p class="text-muted mb-0" th:text="#{item.manage.desc}">등록된 모든 상품을 관리합니다</p>
             </div>
-            <a href="/view/itemCreateForm" class="btn btn-create">
+            <a href="/view/itemCreateForm" class="btn btn-create" th:text="'+ ' + #{item.create.title}">
                 + 상품 등록
             </a>
         </div>
@@ -228,11 +228,11 @@
                 <thead>
                 <tr>
                     <th scope="col" style="width: 8%;">#</th>
-                    <th scope="col" style="width: 12%;">이미지</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col" style="width: 14%;">가격</th>
-                    <th scope="col" style="width: 14%;">재고수량</th>
-                    <th scope="col" style="width: 10%;">관리</th>
+                    <th scope="col" style="width: 12%;" th:text="#{item.image}">이미지</th>
+                    <th scope="col" th:text="#{item.name}">상품명</th>
+                    <th scope="col" style="width: 14%;" th:text="#{item.price}">가격</th>
+                    <th scope="col" style="width: 14%;" th:text="#{item.stock}">재고수량</th>
+                    <th scope="col" style="width: 10%;" th:text="#{board.manage}">관리</th>
                 </tr>
                 </thead>
                 <tbody id="itemTableBody">
@@ -242,7 +242,7 @@
         </div>
 
         <!-- 빈 상태 메시지 -->
-        <div id="noItemsMessage" class="no-items" style="display: none;">
+        <div id="noItemsMessage" class="no-items" style="display: none;" th:text="#{item.no.items}">
             등록된 상품이 없습니다.
         </div>
 

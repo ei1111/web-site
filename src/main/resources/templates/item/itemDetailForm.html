@@ -198,10 +198,19 @@
     <div class="detail-container">
 
         <a href="/view/itemList" class="btn btn-outline-secondary mb-4 d-inline-flex align-items-center gap-2">
-            <i class="bi bi-arrow-left"></i> 목록으로 돌아가기
+            <i class="bi bi-arrow-left"></i> <span th:text="#{button.previous}">목록으로 돌아가기</span>
         </a>
 
         <div class="card card-detail">
+            <!-- 다국어 메시지를 위한 숨겨진 데이터 -->
+            <div id="i18n-messages" style="display:none"
+                 th:attr="data-stock=#{item.stock},
+                          data-out-of-stock=#{item.out.of.stock},
+                          data-quantity=#{order.quantity},
+                          data-order=#{order.button},
+                          data-no-desc=#{item.no.desc},
+                          data-price-unit=#{item.price.unit}">
+            </div>
             <div id="itemDetail" class="row g-0">
                 <!-- JavaScript로 내용이 채워짐 -->
             </div>

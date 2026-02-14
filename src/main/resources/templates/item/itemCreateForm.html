@@ -208,49 +208,49 @@
         <div class="card card-register">
 
             <div class="card-header">
-                <h2>상품 등록</h2>
-                <p>ShopHub에 판매할 상품 정보를 입력해주세요</p>
+                <h2 th:text="#{item.create.title}">상품 등록</h2>
+                <p th:text="#{item.create.desc}">ShopHub에 판매할 상품 정보를 입력해주세요</p>
             </div>
 
             <div class="card-body p-5">
                 <form id="itemForm">
 
                     <div class="mb-4">
-                        <label for="image" class="form-label">상품 이미지</label>
+                        <label for="image" class="form-label" th:text="#{item.image}">상품 이미지</label>
                         <input type="file" id="image" name="image" class="form-control" accept="image/*">
                         <img id="imagePreview" class="image-preview" alt="미리보기">
                     </div>
 
                     <div class="mb-4">
-                        <label for="name" class="form-label">상품명</label>
-                        <input type="text" id="name" class="form-control" placeholder="상품명을 입력하세요" required>
+                        <label for="name" class="form-label" th:text="#{item.name}">상품명</label>
+                        <input type="text" id="name" class="form-control" th:placeholder="#{item.name.placeholder}" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="price" class="form-label">가격</label>
-                        <input type="number" id="price" class="form-control" placeholder="가격을 입력하세요" min="0" required>
+                        <label for="price" class="form-label" th:text="#{item.price}">가격</label>
+                        <input type="number" id="price" class="form-control" th:placeholder="#{item.price.placeholder}" min="0" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="stockQuantity" class="form-label">재고 수량</label>
-                        <input type="number" id="stockQuantity" class="form-control" placeholder="수량을 입력하세요" min="0" required>
+                        <label for="stockQuantity" class="form-label" th:text="#{item.stock}">재고 수량</label>
+                        <input type="number" id="stockQuantity" class="form-control" th:placeholder="#{item.stock.placeholder}" min="0" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="author" class="form-label">저자</label>
-                        <input type="text" id="author" class="form-control" placeholder="저자를 입력하세요">
+                        <label for="author" class="form-label" th:text="#{item.author}">저자</label>
+                        <input type="text" id="author" class="form-control" th:placeholder="#{item.author.placeholder}">
                     </div>
 
                     <div class="mb-4">
-                        <label for="isbn" class="form-label">ISBN</label>
-                        <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요">
+                        <label for="isbn" class="form-label" th:text="#{item.isbn}">ISBN</label>
+                        <input type="text" id="isbn" class="form-control" th:placeholder="#{item.isbn.placeholder}">
                     </div>
 
                     <div class="mt-5 d-flex gap-3 justify-content-end flex-wrap">
-                        <button type="submit" class="btn btn-save btn-lg px-5">
+                        <button type="submit" class="btn btn-save btn-lg px-5" th:text="#{item.create.title}">
                             상품 등록
                         </button>
-                        <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5">
+                        <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5" th:text="#{button.cancel}">
                             취소
                         </button>
                     </div>

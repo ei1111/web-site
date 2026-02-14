@@ -33,7 +33,6 @@ public class ItemViewController {
         return "item/itemUpdateForm";
     }
 
-
     @GetMapping("{itemId}/detail")
     public String itemDetailForm(@PathVariable Long itemId, Model model) {
         model.addAttribute("itemId", itemId);
