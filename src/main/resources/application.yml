@@ -2,6 +2,11 @@
 spring:
   profiles:
     active: local
+  # 다국어 설정 추가
+  messages:
+    basename: messages
+    encoding: UTF-8
+    cache-duration: 3600
 ---
 spring:
   config:

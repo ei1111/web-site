@@ -1,34 +1,34 @@
-# E-Commerce 플랫폼
+# E-Commerce Platform
 
-> Spring Boot와 Thymeleaf로 구축한 풀스택 쇼핑몰 플랫폼
+> A full-stack e-commerce platform built with Spring Boot and Thymeleaf
 
-**한국어** | [English](README.en.md)
-
----
-
-## 📋 목차
-- [프로젝트 개요](#프로젝트-개요)
-- [기술 스택](#기술-스택)
-- [주요 기능](#주요-기능)
-- [아키텍처](#아키텍처)
-- [데이터베이스 설계](#데이터베이스-설계)
-- [API 문서](#api-문서)
+[한국어](README.md) | **English**
 
 ---
 
-## 🎯 프로젝트 개요
-
-이 프로젝트는 Spring Boot 백엔드와 반응형 프론트엔드를 갖춘 현대적인 전자상거래 플랫폼입니다.
-
-**라이브 데모**: [https://your-domain.com](https://your-domain.com)
-
-### 목적
-- 엔터프라이즈급 아키텍처와 모범 사례 구현
-- 설계부터 배포까지 전체 개발 생명주기 시연
+## 📋 Table of Contents
+- [Project Overview](#project-overview)
+- [Tech Stack](#tech-stack)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Database Design](#database-design)
+- [API Documentation](#api-documentation)
 
 ---
 
-## 🛠 기술 스택
+## 🎯 Project Overview
+
+This project is a modern e-commerce platform that demonstrates full-stack development capabilities with Spring Boot backend and responsive frontend.
+
+**Live Demo**: [https://your-domain.com](https://your-domain.com)
+
+### Purpose
+- Demonstrates enterprise-level architecture and best practices
+- Showcases full development lifecycle from design to deployment
+
+---
+
+## 🛠 Tech Stack
 
 ### Backend
 - **Framework**: Spring Boot 3.5.6
@@ -52,41 +52,41 @@
 
 ---
 
-## ✨ 주요 기능
+## ✨ Key Features
 
-### 회원 관리
-- ✅ 회원 가입 및 인증
-- ✅ JWT 기반 세션 관리
-- ✅ 역할 기반 접근 제어 (USER/ADMIN)
-- ✅ 회원 프로필 관리
+### User Management
+- ✅ User registration and authentication
+- ✅ JWT-based session management
+- ✅ Role-based access control (USER/ADMIN)
+- ✅ User profile management
 
-### 상품 관리
-- ✅ 상품 CRUD 기능
-- ✅ 이미지 업로드 기능
-- ✅ 재고 관리
-- ✅ 상품 검색 및 필터링
+### Product Management
+- ✅ Product CRUD operations
+- ✅ Image upload functionality
+- ✅ Inventory management
+- ✅ Product search and filtering
 
-### 주문 시스템
-- ✅ 장바구니 기능
-- ✅ 주문 생성 및 추적
-- ✅ 결제 연동 (PG 연동)
-- ✅ 주문 내역 조회
+### Order System
+- ✅ Shopping cart functionality
+- ✅ Order placement and tracking
+- ✅ Payment integration (PG integration)
+- ✅ Order history
 
-### 게시판 시스템
-- ✅ 게시글 작성 및 수정
-- ✅ 검색 기능
-- ✅ 페이지네이션
-- ✅ 작성자만 수정/삭제 가능
+### Board System
+- ✅ Post creation and editing
+- ✅ Search functionality
+- ✅ Pagination
+- ✅ Author-only edit/delete
 
-### 성능 최적화
-- ✅ 자주 조회되는 데이터의 Redis 캐싱
-- ✅ 재고 관리를 위한 비관적 락
-- ✅ QueryDSL을 이용한 쿼리 최적화
-- ✅ N+1 쿼리 방지
+### Performance Optimization
+- ✅ Redis caching for frequently accessed data
+- ✅ Pessimistic locking for inventory management
+- ✅ Query optimization with QueryDSL
+- ✅ N+1 query prevention
 
 ---
 
-## 🏗 아키텍처
+## 🏗 Architecture
 
 ```
 ┌─────────────┐
@@ -119,7 +119,7 @@
 
 ---
 
-## 🗄 데이터베이스 설계
+## 🗄 Database Design
 
 ### ERD (Entity Relationship Diagram)
 
@@ -205,88 +205,87 @@ erDiagram
     }
 ```
 
-### 주요 테이블
+### Main Tables
 
-#### Member (회원)
-- 사용자 인증 및 프로필 정보
-- 주소 정보 내장
+#### Member
+- User authentication and profile information
+- Embedded address information
 
-#### Item (상품)
-- 상품 정보
-- 재고 관리
-- 이미지 저장
+#### Item
+- Product information
+- Stock management
+- Image storage
 
-#### Order (주문)
-- 주문 헤더 정보
-- 회원 및 배송 연결
+#### Order
+- Order header information
+- Links to member and delivery
 
-#### OrderItem (주문상품)
-- 주문 라인 아이템
-- 상품 및 수량 정보
+#### OrderItem
+- Order line items
+- Product and quantity information
 
-#### Payment (결제)
-- 결제 거래 기록
-- PG사 연동
+#### Payment
+- Payment transaction records
+- Integration with PG (Payment Gateway)
 
 ---
 
+## 📚 API Documentation
 
-## 📚 API 문서
-
-Swagger UI를 통해 API 문서를 확인할 수 있습니다:
+API documentation is available via Swagger UI:
 
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
-### 주요 엔드포인트
+### Main Endpoints
 
-#### 인증
-- `POST /api/v1/members` - 회원 가입
-- `POST /auth/login` - 로그인
+#### Authentication
+- `POST /api/v1/members` - User registration
+- `POST /auth/login` - User login
 
-#### 상품
-- `GET /api/v1/items` - 상품 목록 조회
-- `POST /api/v1/items` - 상품 등록 (ADMIN)
-- `PUT /api/v1/items/{id}` - 상품 수정 (ADMIN)
+#### Products
+- `GET /api/v1/items` - Get product list
+- `POST /api/v1/items` - Create product (ADMIN)
+- `PUT /api/v1/items/{id}` - Update product (ADMIN)
 
-#### 주문
-- `POST /api/v1/orders` - 주문 생성
-- `GET /api/v1/orders` - 주문 목록 조회
+#### Orders
+- `POST /api/v1/orders` - Create order
+- `GET /api/v1/orders` - Get order list
 
-#### 게시판
-- `GET /api/v1/boards` - 게시글 목록 조회
-- `POST /api/v1/boards` - 게시글 작성
-- `DELETE /api/v1/boards/{id}` - 게시글 삭제
-
----
-
-## 🔒 보안 고려사항
-
-- 만료 기능이 있는 JWT 토큰
-- SHA-512를 사용한 비밀번호 암호화
-- PreparedStatement를 통한 SQL 인젝션 방지
-- 입력 검증을 통한 XSS 방지
-- CORS 설정
-- 프로덕션 환경에서 HTTPS 강제
+#### Board
+- `GET /api/v1/boards` - Get post list
+- `POST /api/v1/boards` - Create post
+- `DELETE /api/v1/boards/{id}` - Delete post
 
 ---
 
-## 📈 성능 최적화
+## 🔒 Security Considerations
 
-- 상품 상세 정보의 Redis 캐싱
-- 자주 조회되는 컬럼에 대한 데이터베이스 인덱싱
-- 커넥션 풀링 (HikariCP)
-- JPA 엔티티의 지연 로딩
-- QueryDSL을 통한 쿼리 최적화
+- JWT tokens with expiration
+- Password encryption with SHA-512
+- SQL injection prevention with PreparedStatement
+- XSS prevention with input validation
+- CORS configuration
+- HTTPS enforced in production
 
 ---
 
-## 👤 작성자
+## 📈 Performance Optimization
 
-**Your Name**
-- GitHub: [김만재](https://github.com/ei1111)
-- LinkedIn: [김만재](https://www.linkedin.com/in/manjae-kim-ba4a3a235/)
+- Redis caching for product details
+- Database indexing on frequently queried columns
+- Connection pooling (HikariCP)
+- Lazy loading for JPA entities
+- Query optimization with QueryDSL
+
+---
+
+## 👤 Author
+
+**Manjae Kim**
+- GitHub: [kimmanjae](https://github.com/ei1111)
+- LinkedIn: [kimmanjae](https://www.linkedin.com/in/manjae-kim-ba4a3a235/)
 - Email: ei1111@naver.com
 
 ---
