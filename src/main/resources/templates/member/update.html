@@ -185,46 +185,46 @@
     <div class="card card-update">
 
       <div class="card-header">
-        <h2>회원 정보 수정</h2>
-        <p>변경하고 싶은 정보를 업데이트하세요</p>
+        <h2 th:text="#{member.update.title}">회원 정보 수정</h2>
+        <p th:text="#{member.update.desc}">변경하고 싶은 정보를 업데이트하세요</p>
       </div>
 
       <div class="card-body p-5">
         <form id="updateForm">
 
           <div class="mb-4">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력해주세요" autocomplete="name">
+            <label for="name" class="form-label" th:text="#{member.name}">이름</label>
+            <input type="text" class="form-control" id="name" name="name" th:placeholder="#{member.name.placeholder}" autocomplete="name">
           </div>
 
           <div class="mb-4">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="example@shophub.kr" autocomplete="email">
+            <label for="email" class="form-label" th:text="#{member.email}">이메일</label>
+            <input type="email" class="form-control" id="email" name="email" th:placeholder="#{member.email.placeholder}" autocomplete="email">
           </div>
 
           <div class="mb-4">
-            <label for="password" class="form-label">새 비밀번호 (변경 시 입력)</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="변경하지 않으면 비워두세요" autocomplete="new-password">
+            <label for="password" class="form-label" th:text="#{member.password.new}">새 비밀번호 (변경 시 입력)</label>
+            <input type="password" class="form-control" id="password" name="password" th:placeholder="#{member.password.optional}" autocomplete="new-password">
           </div>
 
           <div class="row g-3 mb-4">
             <div class="col-12 col-sm-6">
-              <label for="city" class="form-label">거주 도시</label>
-              <input type="text" class="form-control" id="city" name="city" placeholder="예: 서울" autocomplete="address-level1">
+              <label for="city" class="form-label" th:text="#{member.city}">거주 도시</label>
+              <input type="text" class="form-control" id="city" name="city" th:placeholder="#{member.city.placeholder}" autocomplete="address-level1">
             </div>
             <div class="col-12 col-sm-6">
-              <label for="zipcode" class="form-label">우편번호</label>
-              <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="12345" autocomplete="postal-code">
+              <label for="zipcode" class="form-label" th:text="#{member.zipcode}">우편번호</label>
+              <input type="text" class="form-control" id="zipcode" name="zipcode" th:placeholder="#{member.zipcode.placeholder}" autocomplete="postal-code">
             </div>
           </div>
 
           <div class="mb-4">
-            <label for="street" class="form-label">도로명 주소</label>
-            <input type="text" class="form-control" id="street" name="street" placeholder="상세 주소를 입력해주세요" autocomplete="street-address">
+            <label for="street" class="form-label" th:text="#{member.street}">도로명 주소</label>
+            <input type="text" class="form-control" id="street" name="street" th:placeholder="#{member.street.placeholder}" autocomplete="street-address">
           </div>
 
           <div class="mt-5 text-center">
-            <button type="button" id="updateBtn" class="btn btn-update btn-lg px-5">
+            <button type="button" id="updateBtn" class="btn btn-update btn-lg px-5" th:text="#{member.update.complete}">
               회원 정보 수정 완료
             </button>
           </div>

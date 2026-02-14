@@ -197,8 +197,8 @@
     <div class="card card-write">
 
       <div class="card-header">
-        <h2 th:text="${boardId} ? '게시글 수정' : '게시글 작성'">게시글 작성</h2>
-        <p>ShopHub 커뮤니티에 공유하고 싶은 이야기를 남겨주세요</p>
+        <h2 th:text="${boardId} ? #{board.edit.title} : #{board.write.title}">게시글 작성</h2>
+        <p th:text="#{board.write.desc}">ShopHub 커뮤니티에 공유하고 싶은 이야기를 남겨주세요</p>
       </div>
 
       <div class="card-body p-5">
@@ -207,19 +207,19 @@
 
           <div class="mb-4">
             <label for="title" class="form-label" th:text="#{board.subject}">제목</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" required>
+            <input type="text" class="form-control" id="title" name="title" th:placeholder="#{board.title.placeholder}" required>
           </div>
 
           <div class="mb-4">
             <label for="content" class="form-label" th:text="#{board.content}">내용</label>
-            <textarea class="form-control" id="content" name="content" rows="10" placeholder="자유롭게 이야기를 적어주세요..." required></textarea>
+            <textarea class="form-control" id="content" name="content" rows="10" th:placeholder="#{board.content.placeholder}" required></textarea>
           </div>
 
           <div class="mt-5 d-flex gap-3 justify-content-end flex-wrap">
-            <button type="submit" class="btn btn-save btn-lg px-5">
+            <button type="submit" class="btn btn-save btn-lg px-5" th:text="#{button.save}">
               저장하기
             </button>
-            <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5">
+            <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5" th:text="#{button.cancel}">
               취소
             </button>
           </div>

@@ -210,8 +210,8 @@
         <!-- 헤더 영역 -->
         <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
-                <h2 class="mb-1 fw-bold">상품 주문 리스트</h2>
-                <p class="text-muted mb-0">모든 주문 내역을 확인하고 관리합니다</p>
+                <h2 class="mb-1 fw-bold" th:text="#{order.list.title}">상품 주문 리스트</h2>
+                <p class="text-muted mb-0" th:text="#{order.list.desc}">모든 주문 내역을 확인하고 관리합니다</p>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <!-- 필요 시 추가 버튼 -->
@@ -220,14 +220,14 @@
 
         <!-- 검색 폼 -->
         <form id="searchForm" class="search-form mb-4">
-            <input type="text" id="memberName" class="form-control" placeholder="회원명 검색">
+            <input type="text" id="memberName" class="form-control" th:placeholder="#{order.search.member}">
             <select id="orderStatus" class="form-select">
-                <option value="">전체 상태</option>
+                <option value="" th:text="#{order.status.all}">전체 상태</option>
                 <option value="ORDER">ORDER</option>
                 <option value="PAYMENT">PAYMENT</option>
                 <option value="CANCEL">CANCEL</option>
             </select>
-            <button type="submit" class="btn px-4">검색</button>
+            <button type="submit" class="btn px-4" th:text="#{button.search}">검색</button>
         </form>
 
         <!-- 테이블 -->
@@ -236,14 +236,14 @@
                 <thead>
                 <tr>
                     <th scope="col" style="width: 6%;">#</th>
-                    <th scope="col">회원명</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col" style="width: 14%;">주문가격</th>
-                    <th scope="col" style="width: 10%;">수량</th>
-                    <th scope="col" style="width: 12%;">상태</th>
-                    <th scope="col" style="width: 16%;">주문일시</th>
-                    <th scope="col" style="width: 12%;">관리</th>
-                    <th scope="col" style="width: 12%;">완료일시</th>
+                    <th scope="col" th:text="#{member.name}">회원명</th>
+                    <th scope="col" th:text="#{item.name}">상품명</th>
+                    <th scope="col" style="width: 14%;" th:text="#{order.price}">주문가격</th>
+                    <th scope="col" style="width: 10%;" th:text="#{order.quantity}">수량</th>
+                    <th scope="col" style="width: 12%;" th:text="#{order.status}">상태</th>
+                    <th scope="col" style="width: 16%;" th:text="#{order.date}">주문일시</th>
+                    <th scope="col" style="width: 12%;" th:text="#{order.manage}">관리</th>
+                    <th scope="col" style="width: 12%;" th:text="#{order.complete.date}">완료일시</th>
                 </tr>
                 </thead>
                 <tbody id="orderTableBody">

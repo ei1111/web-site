@@ -70,12 +70,12 @@
 <main class="flex-shrink-0" style="margin-top: 80px;">
   <div class="container">
     <div class="text-center py-5" style="animation: fadeInDown 0.8s ease-out;">
-      <h1 class="display-4 fw-bold mb-4" style="background: linear-gradient(135deg, #1e293b 0%, #0f766e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+      <h1 class="display-4 fw-bold mb-4" style="background: linear-gradient(135deg, #1e293b 0%, #0f766e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" th:text="#{index.hero.title}">
         특별한 쇼핑 경험
       </h1>
-      <p class="lead mb-5" style="color: #475569; font-size: 1.3rem;">당신이 찾던 모든 것이 여기에</p>
+      <p class="lead mb-5" style="color: #475569; font-size: 1.3rem;" th:text="#{index.hero.subtitle}">당신이 찾던 모든 것이 여기에</p>
       <a href="/view/itemList">
-        <button class="btn btn-primary btn-lg px-5 py-3" style="background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%); border: none; border-radius: 50px; font-weight: 600; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 35px rgba(37, 99, 235, 0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px rgba(37, 99, 235, 0.3)'">
+        <button class="btn btn-primary btn-lg px-5 py-3" style="background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%); border: none; border-radius: 50px; font-weight: 600; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 35px rgba(37, 99, 235, 0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 25px rgba(37, 99, 235, 0.3)'" th:text="#{index.shop.now}">
           지금 쇼핑하기 →
         </button>
       </a>
@@ -86,9 +86,9 @@
         <div class="card h-100" style="border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; background: white;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 35px rgba(0, 0, 0, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.08)'">
           <div class="card-body text-center" style="padding: 2rem;">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">✨</div>
-            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;">신상품</h5>
-            <p class="card-text" style="color: #64748b;">최신 상품을 만나보세요</p>
-            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;">둘러보기 →</a>
+            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;" th:text="#{index.category.new}">신상품</h5>
+            <p class="card-text" style="color: #64748b;" th:text="#{index.category.new.desc}">최신 상품을 만나보세요</p>
+            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;" th:text="#{index.explore}">둘러보기 →</a>
           </div>
         </div>
       </div>
@@ -97,9 +97,9 @@
         <div class="card h-100" style="border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; background: white;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 35px rgba(0, 0, 0, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.08)'">
           <div class="card-body text-center" style="padding: 2rem;">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">⭐</div>
-            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;">베스트</h5>
-            <p class="card-text" style="color: #64748b;">인기 상품을 둘러보세요</p>
-            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;">둘러보기 →</a>
+            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;" th:text="#{index.category.best}">베스트</h5>
+            <p class="card-text" style="color: #64748b;" th:text="#{index.category.best.desc}">인기 상품을 둘러보세요</p>
+            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;" th:text="#{index.explore}">둘러보기 →</a>
           </div>
         </div>
       </div>
@@ -107,19 +107,19 @@
         <div class="card h-100" style="border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; background: white;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 12px 35px rgba(0, 0, 0, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0, 0, 0, 0.08)'">
           <div class="card-body text-center" style="padding: 2rem;">
             <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎉</div>
-            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;">특가</h5>
-            <p class="card-text" style="color: #64748b;">특별한 할인을 받아보세요</p>
-            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;">둘러보기 →</a>
+            <h5 class="card-title fw-bold" style="color: #1e293b; font-size: 1.5rem;" th:text="#{index.category.sale}">특가</h5>
+            <p class="card-text" style="color: #64748b;" th:text="#{index.category.sale.desc}">특별한 할인을 받아보세요</p>
+            <a href="/view/itemList" style="color: #2563eb; font-weight: 600; text-decoration: none;" th:text="#{index.explore}">둘러보기 →</a>
           </div>
         </div>
       </div>
     </div>
 
     <div class="position-relative rounded-4 overflow-hidden mb-5" style="background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%); padding: 3rem 2rem; text-align: center; box-shadow: 0 15px 40px rgba(37, 99, 235, 0.25);">
-      <h2 class="text-white fw-bold mb-3" style="font-size: 2rem;">신규 회원 특별 혜택</h2>
-      <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95;">가입하고 첫 구매 시 20% 할인 쿠폰을 받으세요</p>
+      <h2 class="text-white fw-bold mb-3" style="font-size: 2rem;" th:text="#{index.promo.title}">신규 회원 특별 혜택</h2>
+      <p class="text-white mb-4" style="font-size: 1.1rem; opacity: 0.95;" th:text="#{index.promo.desc}">가입하고 첫 구매 시 20% 할인 쿠폰을 받으세요</p>
       <a href="/view/join">
-        <button class="btn btn-light btn-lg px-5 py-3" style="border-radius: 50px; font-weight: 600; color: #2563eb;">회원가입하기</button>
+        <button class="btn btn-light btn-lg px-5 py-3" style="border-radius: 50px; font-weight: 600; color: #2563eb;" th:text="#{index.join.button}">회원가입하기</button>
       </a>
     </div>
   </div>
