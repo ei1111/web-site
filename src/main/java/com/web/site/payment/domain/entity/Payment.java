@@ -2,6 +2,7 @@ package com.web.site.payment.domain.entity;
 
 
 import com.web.site.global.audit.BaseEntity;
+import com.web.site.global.common.util.CustomDateFormat;
 import com.web.site.order.domain.entity.Order;
 import com.web.site.payment.domain.dto.request.PaymentRequest;
 import jakarta.persistence.CascadeType;
@@ -89,6 +90,10 @@ public class Payment extends BaseEntity {
     @Comment("카드 번호")
     @Column(name = "card_number", length = 50)
     private String cardNumber;
+
+    public String getPaymentDate() {
+        return CustomDateFormat.formatDateTime(paymentDate);
+    }
 
     public static Payment of(PaymentRequest request, Order order) {
         return Payment.builder()

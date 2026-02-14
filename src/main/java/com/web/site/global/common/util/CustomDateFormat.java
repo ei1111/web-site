@@ -19,4 +19,7 @@ public class CustomDateFormat {
         return LocalDateTime.now().format(EXCELFORMATTER);
     }
 
+    public static String formatDateTime(LocalDateTime time) {
+        return time.format(NOWDATEFORMATTER);
+    }
 }

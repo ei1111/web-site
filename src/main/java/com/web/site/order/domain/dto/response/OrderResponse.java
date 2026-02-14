@@ -5,6 +5,7 @@ import com.web.site.global.common.enums.OrderStatus;
 import com.web.site.order.domain.entity.Order;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,9 @@ public class OrderResponse {
     @Schema(description = "주문 날짜", example = "2025-05-28")
     private LocalDate orderDate;
 
+    @Schema(description = "상태 완료 날짜", example = "2025-05-28 10:00:00")
+    private String paymentDate;
+
     public static OrderResponse from(Order order) {
         return new OrderResponse(order);
     }
@@ -41,5 +45,6 @@ public class OrderResponse {
         this.memberName = order.getMember().getName();
         this.status = order.getStatus();
         this.orderDate = order.getOrderDate();
+        this.paymentDate = order.getPayment().getPaymentDate();
     }
 }

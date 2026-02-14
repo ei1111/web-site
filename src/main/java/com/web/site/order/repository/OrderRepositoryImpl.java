@@ -10,6 +10,7 @@ import com.web.site.member.domain.entity.QMember;
 import com.web.site.order.domain.dto.request.OrderSearchRequest;
 import com.web.site.order.domain.dto.response.OrderResponse;
 import com.web.site.order.domain.entity.QOrder;
+import com.web.site.payment.domain.entity.QPayment;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
@@ -19,6 +20,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     private QOrder order = QOrder.order;
     private QMember member = QMember.member;
+    private QPayment payment = QPayment.payment;
 
 
     @Override
@@ -27,6 +29,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         return jpaQueryFactory.selectFrom(order)
                 .join(order.member, member)
+                .join(order.payment, payment)
                 .where(
                         applyRoleScope(role, userId)
                       , eqStatus(request.getOrderStatus())
