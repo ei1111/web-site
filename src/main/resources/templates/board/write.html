@@ -1,117 +1,292 @@
-<!doctype html>
-<html lang="kr" xmlns:th="http://www.thymleaf.org" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>게시글 작성/수정 - ShopHub</title>
 
-<head th:replace="~{fragments/common :: head('게시판')}">
-  <script defer="" src="/js/bootstrap.bundle.min.js"></script>
+  <!-- fragments/common head 불러오기 -->
+  <th:block th:replace="~{fragments/common :: head('게시판')}"></th:block>
+
+  <!-- Bootstrap Icons (다크모드 토글용) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --primary-start: #2563eb;
+      --primary-end: #0891b2;
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --card-border: rgba(203, 213, 225, 0.3);
+      --shadow-md: 0 12px 40px rgba(0,0,0,0.12);
+    }
+
+    [data-bs-theme="dark"] {
+      --card-bg: rgba(30, 41, 59, 0.72);
+      --card-border: rgba(59, 69, 92, 0.4);
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      min-height: 100vh;
+      padding-top: 80px;
+      color: #1e293b;
+    }
+
+    [data-bs-theme="dark"] body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+    }
+
+    .write-container {
+      max-width: 900px;
+      width: 100%;
+      margin: 2.5rem auto;
+    }
+
+    .card-write {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card-write:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+      color: white;
+      border-bottom: none;
+      padding: 2.25rem 2rem 1.75rem;
+      text-align: center;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      font-size: 2rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    [data-bs-theme="dark"] .form-label {
+      color: #cbd5e1;
+    }
+
+    .form-control, .form-control:focus {
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      padding: 0.85rem 1.25rem;
+      font-size: 1.05rem;
+      background: rgba(255,255,255,0.6);
+      transition: all 0.25s ease;
+    }
+
+    [data-bs-theme="dark"] .form-control,
+    [data-bs-theme="dark"] .form-control:focus {
+      background: rgba(30,41,59,0.5);
+      border-color: #475569;
+      color: #e2e8f0;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-start);
+      box-shadow: 0 0 0 5px rgba(37,99,235,0.18);
+      background: white;
+    }
+
+    [data-bs-theme="dark"] .form-control:focus {
+      background: rgba(30,41,59,0.8);
+    }
+
+    textarea.form-control {
+      min-height: 220px;
+      resize: vertical;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+      border: none;
+      border-radius: 9999px;
+      padding: 0.85rem 2.5rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 45px rgba(37,99,235,0.45);
+    }
+
+    .btn-cancel {
+      border-radius: 9999px;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+
+    .bd-mode-toggle .btn {
+      background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+      border: none;
+      box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 576px) {
+      .write-container {
+        margin: 1.5rem 1rem;
+      }
+      .card-header {
+        padding: 2rem 1.5rem 1.5rem;
+      }
+      .btn-save, .btn-cancel {
+        width: 100%;
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-body {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+  </style>
 </head>
 
-<body class="d-flex flex-column h-100">
-<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="check2" viewBox="0 0 16 16">
-    <path
-        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-  </symbol>
-  <symbol id="circle-half" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
-  </symbol>
-  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-    <path
-        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
-    <path
-        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
-  </symbol>
-  <symbol id="sun-fill" viewBox="0 0 16 16">
-    <path
-        d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
-  </symbol>
-</svg>
+<body>
 
-
-<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-  <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme"
-          type="button" aria-expanded="false" data-bs-toggle="dropdown"
-          aria-label="Toggle theme (light)">
-    <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+<!-- 다크모드 토글 -->
+<div class="dropdown position-fixed bottom-0 end-0 mb-5 me-4 bd-mode-toggle" style="z-index: 1030;">
+  <button class="btn btn-primary shadow-lg" id="bd-theme" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle theme">
+    <i class="bi bi-circle-half fs-4"></i>
   </button>
-  <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center active"
-              data-bs-theme-value="light" aria-pressed="true">
-        <svg class="bi me-2 opacity-50" aria-hidden="true">
-          <use href="#sun-fill"></use>
-        </svg>
-        Light
-        <svg class="bi ms-auto d-none" aria-hidden="true">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center"
-              data-bs-theme-value="dark" aria-pressed="false">
-        <svg class="bi me-2 opacity-50" aria-hidden="true">
-          <use href="#moon-stars-fill"></use>
-        </svg>
-        Dark
-        <svg class="bi ms-auto d-none" aria-hidden="true">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
-    <li>
-      <button type="button" class="dropdown-item d-flex align-items-center"
-              data-bs-theme-value="auto" aria-pressed="false">
-        <svg class="bi me-2 opacity-50" aria-hidden="true">
-          <use href="#circle-half"></use>
-        </svg>
-        Auto
-        <svg class="bi ms-auto d-none" aria-hidden="true">
-          <use href="#check2"></use>
-        </svg>
-      </button>
-    </li>
+  <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="bd-theme" style="border-radius: 12px; min-width: 140px;">
+    <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2"></i> Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2"></i> Dark</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"><i class="bi bi-circle-half me-2"></i> Auto</button></li>
   </ul>
-
 </div>
 
+<!-- Navbar -->
+<header th:replace="~{fragments/common :: menu('board')}"></header>
 
-<header>
-  <!-- Fixed navbar -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-       th:replace="~{fragments/common :: menu('board')}">
-  </nav>
-</header>
-
-<!-- Begin page content -->
 <main class="flex-shrink-0">
-  <div class="container">
-    <h1 class="mt-5">게시판</h1>
+  <div class="write-container">
 
-    <form id="boardForm">
-      <input type="hidden" id="boardId" name="boardId" th:value="${boardId}" />
+    <div class="card card-write">
 
-      <div class="mb-3">
-        <label for="title">제목</label>
-        <input type="text" class="form-control" id="title" name="title" />
+      <div class="card-header">
+        <h2 th:text="${boardId} ? '게시글 수정' : '게시글 작성'">게시글 작성</h2>
+        <p>ShopHub 커뮤니티에 공유하고 싶은 이야기를 남겨주세요</p>
       </div>
 
-      <div class="mb-3">
-        <label for="content">내용</label>
-        <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+      <div class="card-body p-5">
+        <form id="boardForm">
+          <input type="hidden" id="boardId" name="boardId" th:value="${boardId}" />
+
+          <div class="mb-4">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" required>
+          </div>
+
+          <div class="mb-4">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="10" placeholder="자유롭게 이야기를 적어주세요..." required></textarea>
+          </div>
+
+          <div class="mt-5 d-flex gap-3 justify-content-end flex-wrap">
+            <button type="submit" class="btn btn-save btn-lg px-5">
+              저장하기
+            </button>
+            <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5">
+              취소
+            </button>
+          </div>
+        </form>
       </div>
 
-      <button type="submit" class="btn btn-primary">저장</button>
-      <button type="button" class="btn btn-secondary" id="cancelButton">취소</button>
-    </form>
+    </div>
 
   </div>
 </main>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 다크모드 토글 스크립트 -->
+<script>
+  (() => {
+    'use strict'
+    const getStoredTheme = () => localStorage.getItem('theme')
+    const setStoredTheme = theme => localStorage.setItem('theme', theme)
+    const getPreferredTheme = () => {
+      const storedTheme = getStoredTheme()
+      if (storedTheme) return storedTheme
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    }
+    const setTheme = theme => {
+      if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-bs-theme', 'dark')
+      } else {
+        document.documentElement.setAttribute('data-bs-theme', theme)
+      }
+    }
+    const showActiveTheme = theme => {
+      const themeSwitcher = document.querySelector('#bd-theme')
+      if (!themeSwitcher) return
+      const icon = themeSwitcher.querySelector('i')
+      if (theme === 'light') icon.className = 'bi bi-sun-fill fs-4'
+      else if (theme === 'dark') icon.className = 'bi bi-moon-stars-fill fs-4'
+      else icon.className = 'bi bi-circle-half fs-4'
+    }
+    setTheme(getPreferredTheme())
+    showActiveTheme(getPreferredTheme())
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const storedTheme = getStoredTheme()
+      if (storedTheme !== 'light' && storedTheme !== 'dark') {
+        setTheme(getPreferredTheme())
+        showActiveTheme(getPreferredTheme())
+      }
+    })
+    document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const theme = toggle.getAttribute('data-bs-theme-value')
+        setStoredTheme(theme)
+        setTheme(theme)
+        showActiveTheme(theme)
+      })
+    })
+  })()
+</script>
+
+<!-- 게시글 작성/수정 스크립트 -->
 <script th:inline="javascript">
   const boardId = document.getElementById("boardId").value;
   const token = localStorage.getItem("accessToken");
+
+  // 수정 모드일 경우 기존 데이터 불러오기
   if (boardId) {
-    // GET 방식에 boardId 파라미터를 붙여줌
     fetch(`/api/v1/form?boardId=${boardId}`, {
       method: 'GET',
       headers: {
@@ -121,28 +296,32 @@
     })
     .then(response => response.json())
     .then(data => {
-      document.getElementById("title").value = data.title;
-      document.getElementById("content").value = data.content;
+      document.getElementById("title").value = data.title || '';
+      document.getElementById("content").value = data.content || '';
     })
     .catch(error => console.error("데이터 불러오기 실패:", error));
   }
 
+  // 폼 제출 (POST: 작성, PUT: 수정)
   document.getElementById('boardForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const boardId = document.getElementById('boardId').value;
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+
+    if (!title || !content) {
+      alert('제목과 내용을 모두 입력해주세요.');
+      return;
+    }
 
     const boardData = {
-      boardId: boardId,
+      boardId: boardId || null,
       title: title,
       content: content
     };
 
     const method = boardId ? 'PUT' : 'POST';
     const url = `/api/v1/form`;
-    const token = localStorage.getItem("accessToken");
 
     fetch(url, {
       method: method,
@@ -153,9 +332,7 @@
       body: JSON.stringify(boardData)
     })
     .then(async response => {
-
       let responseBody = null;
-
       const contentType = response.headers.get("content-type");
 
       if (contentType && contentType.includes("application/json")) {
@@ -165,10 +342,7 @@
       }
 
       if (!response.ok) {
-        const errorMessage =
-            responseBody?.message ||
-            responseBody ||
-            `HTTP ${response.status}`;
+        const errorMessage = responseBody?.message || responseBody || `HTTP ${response.status}`;
         throw new Error(errorMessage);
       }
 
@@ -180,15 +354,19 @@
     })
     .catch(error => {
       console.error('에러 발생:', error);
-      alert(error.message);
+      alert('저장 중 오류가 발생했습니다.\n' + error.message);
     });
-
   });
 
-document.getElementById('cancelButton').addEventListener('click', function () {
-  window.history.back(); // 이전 페이지로 이동
-});
+  // 취소 버튼
+  document.getElementById('cancelButton').addEventListener('click', function () {
+    if (confirm('작성 중인 내용이 저장되지 않습니다.\n정말 취소하시겠습니까?')) {
+      window.history.back();
+    }
+  });
 </script>
+
 <script th:src="@{/js/navbar.js}"></script>
+
 </body>
 </html>

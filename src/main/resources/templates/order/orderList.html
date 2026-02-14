@@ -1,131 +1,428 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/common :: head('상품주문리스트')}">
-    <script defer="" src="/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-         th:replace="fragments/common :: menu('orderList')">
-    </nav>
-</header>
-<!-- Bootstrap -->
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
-</head>
-
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 포트원 결제 -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>상품 주문 리스트 - ShopHub</title>
+
+    <!-- fragments/common head 불러오기 -->
+    <th:block th:replace="~{fragments/common :: head('상품주문리스트')}"></th:block>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- PortOne (아임포트) 결제 SDK -->
     <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-    <!-- 포트원 결제 -->
+
+    <style>
+        :root {
+            --primary-start: #2563eb;
+            --primary-end: #0891b2;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(203, 213, 225, 0.3);
+            --shadow-md: 0 12px 40px rgba(0,0,0,0.12);
+        }
+
+        [data-bs-theme="dark"] {
+            --card-bg: rgba(30, 41, 59, 0.72);
+            --card-border: rgba(59, 69, 92, 0.4);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            color: #1e293b;
+        }
+
+        [data-bs-theme="dark"] body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+        }
+
+        .order-container {
+            max-width: 1400px;
+            margin: 2.5rem auto;
+        }
+
+        .page-header {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .table-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            color: white;
+            font-weight: 700;
+            border: none;
+            text-align: center;
+            vertical-align: middle;
+            padding: 1rem 0.75rem;
+        }
+
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.08);
+            transform: translateY(-2px);
+        }
+
+        [data-bs-theme="dark"] .table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.18);
+        }
+
+        .table td {
+            vertical-align: middle;
+            padding: 1rem 0.75rem;
+            border-top: 1px solid rgba(203, 213, 225, 0.3);
+        }
+
+        [data-bs-theme="dark"] .table td {
+            border-top-color: rgba(59, 69, 92, 0.4);
+        }
+
+        .status-ORDER { color: #2563eb; font-weight: 600; }
+        .status-PAYMENT { color: #10b981; font-weight: 600; }
+        .status-CANCEL { color: #9ca3af; font-weight: 600; text-decoration: line-through; }
+
+        .btn-payment {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            border-radius: 9999px;
+            padding: 0.6rem 1.4rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-payment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(37,99,235,0.45);
+        }
+
+        .btn-cancel-order {
+            border-radius: 9999px;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .search-form .form-control,
+        .search-form .form-select {
+            min-width: 160px;
+            border-radius: 12px;
+        }
+
+        .search-form .btn {
+            background: var(--primary-start);
+            border: none;
+            color: white;
+            border-radius: 12px;
+            padding: 0.6rem 1.5rem;
+            white-space: nowrap;
+            transition: all 0.25s;
+        }
+
+        .search-form .btn:hover {
+            background: var(--primary-end);
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 5rem 1rem;
+            color: #94a3b8;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .bd-mode-toggle .btn {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-form .form-control,
+            .search-form .form-select,
+            .search-form .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<div class="p-5 container mt-5">
-    <h1 class="p-2 mt-3">상품주문리스트</h1>
-    <div>
-        <div>
-            <form id="searchForm" class="form-inline">
-                <div class="form-group mb-2">
-                    <input type="text" id="memberName" class="form-control" placeholder="회원명" />
-                </div>
-                <div class="form-group mx-sm-1 mb-2">
-                    <select id="orderStatus" class="form-control">
-                        <option value="">주문상태</option>
-                        <option value="ORDER">ORDER</option>
-                        <option value="CANCEL">CANCEL</option>
-                        <option value="PAYMENT">PAYMENT</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mb-2">검색</button>
-            </form>
+
+<!-- 다크모드 토글 -->
+<div class="dropdown position-fixed bottom-0 end-0 mb-5 me-4 bd-mode-toggle" style="z-index: 1030;">
+    <button class="btn btn-primary shadow-lg" id="bd-theme" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle theme">
+        <i class="bi bi-circle-half fs-4"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="bd-theme" style="border-radius: 12px; min-width: 140px;">
+        <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2"></i> Light</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2"></i> Dark</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"><i class="bi bi-circle-half me-2"></i> Auto</button></li>
+    </ul>
+</div>
+
+<!-- Navbar -->
+<header th:replace="~{fragments/common :: menu('orderList')}"></header>
+
+<main class="flex-shrink-0">
+    <div class="order-container">
+
+        <!-- 헤더 영역 -->
+        <div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2 class="mb-1 fw-bold">상품 주문 리스트</h2>
+                <p class="text-muted mb-0">모든 주문 내역을 확인하고 관리합니다</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <!-- 필요 시 추가 버튼 -->
+            </div>
         </div>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>no</th>
-                <th>회원명</th>
-                <th>상품명</th>
-                <th>주문가격</th>
-                <th>주문수량</th>
-                <th>상태</th>
-                <th>일시</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="orderTableBody">
-            </tbody>
-        </table>
-    </div>
+        <!-- 검색 폼 -->
+        <form id="searchForm" class="search-form mb-4">
+            <input type="text" id="memberName" class="form-control" placeholder="회원명 검색">
+            <select id="orderStatus" class="form-select">
+                <option value="">전체 상태</option>
+                <option value="ORDER">ORDER</option>
+                <option value="PAYMENT">PAYMENT</option>
+                <option value="CANCEL">CANCEL</option>
+            </select>
+            <button type="submit" class="btn px-4">검색</button>
+        </form>
 
-</div> <!-- /container -->
-</body>
+        <!-- 테이블 -->
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 6%;">#</th>
+                    <th scope="col">회원명</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col" style="width: 14%;">주문가격</th>
+                    <th scope="col" style="width: 10%;">수량</th>
+                    <th scope="col" style="width: 12%;">상태</th>
+                    <th scope="col" style="width: 16%;">주문일시</th>
+                    <th scope="col" style="width: 12%;">관리</th>
+                </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                <!-- JS로 채워짐 -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 빈 상태 메시지 -->
+        <div id="noOrdersMessage" class="no-orders" style="display: none;">
+            조회된 주문 내역이 없습니다.
+        </div>
+
+    </div>
+</main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 다크모드 토글 스크립트 -->
+<script>
+    (() => {
+        'use strict'
+        const getStoredTheme = () => localStorage.getItem('theme')
+        const setStoredTheme = theme => localStorage.setItem('theme', theme)
+        const getPreferredTheme = () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme) return storedTheme
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        const setTheme = theme => {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark')
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme)
+            }
+        }
+        const showActiveTheme = theme => {
+            const themeSwitcher = document.querySelector('#bd-theme')
+            if (!themeSwitcher) return
+            const icon = themeSwitcher.querySelector('i')
+            if (theme === 'light') icon.className = 'bi bi-sun-fill fs-4'
+            else if (theme === 'dark') icon.className = 'bi bi-moon-stars-fill fs-4'
+            else icon.className = 'bi bi-circle-half fs-4'
+        }
+        setTheme(getPreferredTheme())
+        showActiveTheme(getPreferredTheme())
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme())
+                showActiveTheme(getPreferredTheme())
+            }
+        })
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value')
+                setStoredTheme(theme)
+                setTheme(theme)
+                showActiveTheme(theme)
+            })
+        })
+    })()
+</script>
+
+<!-- 주문 리스트 + 결제/취소 스크립트 -->
 <script>
     const token = localStorage.getItem("accessToken");
 
-    document.getElementById('searchForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const memberName = document.getElementById('memberName').value;
-        const orderStatus = document.getElementById('orderStatus').value;
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("searchForm").dispatchEvent(new Event("submit"));
+    });
 
-        const res = await fetch(`/order/v1/list?memberName=${memberName}&orderStatus=${orderStatus}`,
-            {
+    document.getElementById("searchForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const memberName = document.getElementById("memberName").value.trim();
+        const orderStatus = document.getElementById("orderStatus").value;
+
+        let url = "/order/v1/list";
+        if (memberName || orderStatus) {
+            url += "?";
+            if (memberName) url += `memberName=${encodeURIComponent(memberName)}&`;
+            if (orderStatus) url += `orderStatus=${orderStatus}`;
+        }
+
+        try {
+            const res = await fetch(url, {
                 method: "GET",
                 headers: { "Authorization": `Bearer ${token}` }
-            }
-        );
-        const orders = await res.json();
+            });
 
-        const tbody = document.getElementById('orderTableBody');
-        tbody.innerHTML = '';
-        orders.forEach(item => {
-            const row = document.createElement('tr');
+            if (!res.ok) throw new Error("주문 목록을 불러오는데 실패했습니다.");
+
+            const orders = await res.json();
+            renderOrders(orders);
+
+        } catch (error) {
+            console.error("주문 목록 조회 오류:", error);
+            document.getElementById("noOrdersMessage").style.display = "block";
+        }
+    });
+
+    function renderOrders(orders) {
+        const tbody = document.getElementById("orderTableBody");
+        const noOrdersMsg = document.getElementById("noOrdersMessage");
+        tbody.innerHTML = "";
+
+        if (!orders || orders.length === 0) {
+            noOrdersMsg.style.display = "block";
+            return;
+        }
+
+        noOrdersMsg.style.display = "none";
+
+        orders.forEach((item, index) => {
+            const orderItem = item.orderItems?.[0] || {};
+            const statusClass = `status-${item.status}`;
+
+            const row = document.createElement("tr");
             row.innerHTML = `
-            <input type="hidden" id="orderId" value="${item.id}" />
-            <td>1</td>
-            <td>${item.memberName}</td>
-            <td>${item.orderItems[0]?.itemName ?? ''}</td>
-            <td>${item.orderItems[0]?.orderPrice ?? ''}</td>
-            <td>${item.orderItems[0]?.count ?? ''}</td>
-            <td>${item.status}</td>
-            <td>${item.orderDate}</td>
-            <td>
-                ${item.status === 'ORDER' ? `<button id="payment-button" class="btn btn-success mb-2" onclick="paymentProcess(${item.id}, '${item.memberName}','${item.orderItems[0]?.itemName}', ${item.orderItems[0]?.orderPrice}, ${item.orderItems[0]?.count})">구매하기</button>` : ''}
-            </td>
-             <td>
-                ${item.status === 'ORDER' ? `<button class="btn btn-danger" onclick="cancelOrder(${item.id})">취소</button>` : ''}
-            </td>
-        `;
+        <td class="text-center fw-medium">${index + 1}</td>
+        <td>${item.memberName || '-'}</td>
+        <td>${orderItem.itemName || '-'}</td>
+        <td class="text-end">${orderItem.orderPrice?.toLocaleString() || '-'}원</td>
+        <td class="text-center">${orderItem.count || '-'}</td>
+        <td class="${statusClass} text-center">${item.status}</td>
+        <td class="text-center">${item.orderDate || '-'}</td>
+        <td class="text-center">
+          ${item.status === 'ORDER' ?
+                `<button class="btn btn-payment btn-sm px-3" onclick="paymentProcess(${item.id}, '${item.memberName}', '${orderItem.itemName}', ${orderItem.orderPrice}, ${orderItem.count})">
+               구매하기
+             </button>` : ''}
+        </td>
+        <td class="text-center">
+          ${item.status === 'ORDER' ?
+                `<button class="btn btn-outline-danger btn-sm px-3" onclick="cancelOrder(${item.id})">
+               취소
+             </button>` : ''}
+        </td>
+      `;
             tbody.appendChild(row);
         });
-    });
-
-
-
-    async function cancelOrder(orderId) {
-        if (!confirm('정말 취소하시겠습니까?')) return;
-        await fetch(`/order/v1/${orderId}/cancel`, {
-            method: 'POST'
-          , headers: { "Authorization": `Bearer ${token}`}
-          });
-        alert('주문이 취소되었습니다.');
-        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('searchForm').dispatchEvent(new Event('submit'));
-    });
+    async function cancelOrder(orderId) {
+        if (!confirm("정말 주문을 취소하시겠습니까?")) return;
+
+        try {
+            const res = await fetch(`/order/v1/${orderId}/cancel`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (res.ok) {
+                alert("주문이 취소되었습니다.");
+                document.getElementById("searchForm").dispatchEvent(new Event("submit"));
+            } else {
+                const error = await res.json();
+                alert("취소 실패: " + (error.message || "잠시 후 다시 시도해주세요."));
+            }
+        } catch (error) {
+            console.error("취소 오류:", error);
+            alert("취소 처리 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 결제 프로세스 (payment.js에서 호출되는 함수로 가정)
+    function paymentProcess(orderId, memberName, itemName, orderPrice, count) {
+        // payment.js에 정의된 함수 호출 (필요 시 매개변수 전달)
+        if (typeof paymentProcess === "function") {
+            paymentProcess(orderId, memberName, itemName, orderPrice, count);
+        } else {
+            alert("결제 모듈이 준비되지 않았습니다. (payment.js 확인)");
+        }
+    }
 </script>
+
 <script th:src="@{/js/navbar.js}"></script>
-<script type="text/javascript" th:src="@{/js/payment.js}"></script>
+<script th:src="@{/js/payment.js}"></script>
+
+</body>
 </html>

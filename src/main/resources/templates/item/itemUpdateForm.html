@@ -1,130 +1,461 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>상품 수정 - ShopHub</title>
 
-<head th:replace="~{fragments/common :: head('상품수정')}">
-    <script defer="" src="/js/bootstrap.bundle.min.js"></script>
+    <!-- fragments/common head 불러오기 -->
+    <th:block th:replace="~{fragments/common :: head('상품수정')}"></th:block>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-start: #2563eb;
+            --primary-end: #0891b2;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(203, 213, 225, 0.3);
+            --shadow-md: 0 12px 40px rgba(0,0,0,0.12);
+        }
+
+        [data-bs-theme="dark"] {
+            --card-bg: rgba(30, 41, 59, 0.72);
+            --card-border: rgba(59, 69, 92, 0.4);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            color: #1e293b;
+        }
+
+        [data-bs-theme="dark"] body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+        }
+
+        .edit-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 2.5rem auto;
+        }
+
+        .card-edit {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-edit:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            color: white;
+            border-bottom: none;
+            padding: 2.25rem 2rem 1.75rem;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            font-size: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        [data-bs-theme="dark"] .form-label {
+            color: #cbd5e1;
+        }
+
+        .form-control, .form-control:focus {
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            padding: 0.85rem 1.25rem;
+            font-size: 1.05rem;
+            background: rgba(255,255,255,0.6);
+            transition: all 0.25s ease;
+        }
+
+        [data-bs-theme="dark"] .form-control,
+        [data-bs-theme="dark"] .form-control:focus {
+            background: rgba(30,41,59,0.5);
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-start);
+            box-shadow: 0 0 0 5px rgba(37,99,235,0.18);
+            background: white;
+        }
+
+        [data-bs-theme="dark"] .form-control:focus {
+            background: rgba(30,41,59,0.8);
+        }
+
+        .current-image {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            background: rgba(255,255,255,0.3);
+            margin: 0.75rem 0;
+        }
+
+        [data-bs-theme="dark"] .current-image {
+            border-color: rgba(59, 69, 92, 0.5);
+            background: rgba(30,41,59,0.4);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 1px solid rgba(203, 213, 225, 0.5);
+            background: rgba(255,255,255,0.3);
+            display: none;
+        }
+
+        [data-bs-theme="dark"] .image-preview {
+            border-color: rgba(59, 69, 92, 0.5);
+            background: rgba(30,41,59,0.4);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            border-radius: 9999px;
+            padding: 0.85rem 2.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(37,99,235,0.45);
+        }
+
+        .btn-cancel {
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.25s;
+        }
+
+        .bd-mode-toggle .btn {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 576px) {
+            .edit-container {
+                margin: 1.5rem 1rem;
+            }
+            .card-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            .btn-save, .btn-cancel {
+                width: 100%;
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-body {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
 </head>
 
-
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-         th:replace="~{fragments/common :: menu('itemUpdate')}">
-    </nav>
-</header>
 <body>
-<div class="container">
-    <h1 class="p-5 mt-5">상품수정</h1>
 
-    <form id="editForm">
-        <!-- id -->
-        <input type="hidden" name="itemId" id="itemId" />
+<!-- 다크모드 토글 -->
+<div class="dropdown position-fixed bottom-0 end-0 mb-5 me-4 bd-mode-toggle" style="z-index: 1030;">
+    <button class="btn btn-primary shadow-lg" id="bd-theme" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle theme">
+        <i class="bi bi-circle-half fs-4"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="bd-theme" style="border-radius: 12px; min-width: 140px;">
+        <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2"></i> Light</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2"></i> Dark</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"><i class="bi bi-circle-half me-2"></i> Auto</button></li>
+    </ul>
+</div>
 
-        <!-- 기존 이미지 표시 -->
-        <div class="form-group">
-            <label>기존 이미지</label><br>
-            <img id="currentImage" src="" alt="현재 상품 이미지" width="100" height="100">
+<!-- Navbar -->
+<header th:replace="~{fragments/common :: menu('itemUpdate')}"></header>
+
+<main class="flex-shrink-0">
+    <div class="edit-container">
+
+        <div class="card card-edit">
+
+            <div class="card-header">
+                <h2>상품 수정</h2>
+                <p>상품 정보를 업데이트해주세요</p>
+            </div>
+
+            <div class="card-body p-5">
+                <form id="editForm">
+                    <input type="hidden" id="itemId" name="itemId" />
+
+                    <!-- 기존 이미지 -->
+                    <div class="mb-4">
+                        <label class="form-label">기존 이미지</label>
+                        <div>
+                            <img id="currentImage" class="current-image" src="" alt="현재 상품 이미지">
+                        </div>
+                    </div>
+
+                    <!-- 새 이미지 선택 + 미리보기 -->
+                    <div class="mb-4">
+                        <label for="image" class="form-label">새 상품 이미지 (변경 시 선택)</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                        <img id="imagePreview" class="image-preview" alt="새 이미지 미리보기">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="name" class="form-label">상품명</label>
+                        <input type="text" id="name" class="form-control" placeholder="상품명을 입력하세요" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="price" class="form-label">가격</label>
+                        <input type="number" id="price" class="form-control" placeholder="가격을 입력하세요" min="0" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="stockQuantity" class="form-label">재고 수량</label>
+                        <input type="number" id="stockQuantity" class="form-control" placeholder="수량을 입력하세요" min="0" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="author" class="form-label">저자</label>
+                        <input type="text" id="author" class="form-control" placeholder="저자를 입력하세요">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요">
+                    </div>
+
+                    <div class="mt-5 d-flex gap-3 justify-content-end flex-wrap">
+                        <button type="submit" class="btn btn-save btn-lg px-5">
+                            수정 완료
+                        </button>
+                        <button type="button" id="cancelButton" class="btn btn-outline-secondary btn-lg px-5">
+                            취소
+                        </button>
+                    </div>
+                </form>
+            </div>
+
         </div>
 
-        <!-- 새 이미지 선택 -->
-        <div class="form-group">
-            <label for="image">새 상품 이미지</label>
-            <input type="file" id="image" name="image" class="form-control">
-        </div>
+    </div>
+</main>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <div class="form-group">
-            <label for="name">상품명</label>
-            <input type="text" id="name" class="form-control" placeholder="이름을 입력하세요" />
-        </div>
-        <div class="form-group">
-            <label for="price">가격</label>
-            <input type="number" id="price" class="form-control" placeholder="가격을 입력하세요" />
-        </div>
-        <div class="form-group">
-            <label for="stockQuantity">수량</label>
-            <input type="number" id="stockQuantity" class="form-control" placeholder="수량을 입력하세요" />
-        </div>
-        <div class="form-group">
-            <label for="author">저자</label>
-            <input type="text" id="author" class="form-control" placeholder="저자를 입력하세요" />
-        </div>
-        <div class="form-group">
-            <label for="isbn">ISBN</label>
-            <input type="text" id="isbn" class="form-control" placeholder="ISBN을 입력하세요" />
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">수정</button>
-        <button type="button" class="btn btn-secondary" id="cancelButton">취소</button>
-    </form>
-
-</div> <!-- /container -->
+<!-- 다크모드 토글 스크립트 -->
 <script>
-   const token = localStorage.getItem("accessToken");
-    // 1. URL에서 ID 추출
-    const pathParts = window.location.pathname.split("/");
-    const itemId = pathParts[2]; // 예: /item/123/edit → "123"
-    // 2. 기존 데이터 조회해서 input에 채우기
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch(`/item/v1/${itemId}/detail`,{
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` }
+    (() => {
+        'use strict'
+        const getStoredTheme = () => localStorage.getItem('theme')
+        const setStoredTheme = theme => localStorage.setItem('theme', theme)
+        const getPreferredTheme = () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme) return storedTheme
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        const setTheme = theme => {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark')
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme)
+            }
+        }
+        const showActiveTheme = theme => {
+            const themeSwitcher = document.querySelector('#bd-theme')
+            if (!themeSwitcher) return
+            const icon = themeSwitcher.querySelector('i')
+            if (theme === 'light') icon.className = 'bi bi-sun-fill fs-4'
+            else if (theme === 'dark') icon.className = 'bi bi-moon-stars-fill fs-4'
+            else icon.className = 'bi bi-circle-half fs-4'
+        }
+        setTheme(getPreferredTheme())
+        showActiveTheme(getPreferredTheme())
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme())
+                showActiveTheme(getPreferredTheme())
+            }
         })
-        .then(response => response.json())
-        .then(item => {
-            document.getElementById("name").value = item.name;
-            document.getElementById("price").value = item.price;
-            document.getElementById("stockQuantity").value = item.stockQuantity;
-            document.getElementById("author").value = item.author;
-            document.getElementById("isbn").value = item.isbn;
-            document.getElementById("currentImage").src = item.imagePath;
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value')
+                setStoredTheme(theme)
+                setTheme(theme)
+                showActiveTheme(theme)
+            })
         })
-        .catch(error => alert("데이터 조회 실패: " + error));
+    })()
+</script>
+
+<!-- 이미지 미리보기 + 상품 수정 스크립트 -->
+<script>
+    // URL에서 itemId 추출
+    const pathParts = window.location.pathname.split('/');
+    const itemId = pathParts[pathParts.length - 2]; // /view/{id}/edit → id
+
+    const token = localStorage.getItem("accessToken");
+
+    // 페이지 로드 시 기존 데이터 불러오기
+    document.addEventListener("DOMContentLoaded", async () => {
+        if (!itemId || isNaN(itemId)) {
+            alert("잘못된 상품 ID입니다.");
+            window.location.href = "/view/itemRegister";
+            return;
+        }
+
+        try {
+            const response = await fetch(`/item/v1/${itemId}/detail`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error("상품 정보를 불러오는데 실패했습니다.");
+            }
+
+            const item = await response.json();
+
+            document.getElementById("itemId").value = item.id;
+            document.getElementById("name").value = item.name || '';
+            document.getElementById("price").value = item.price || 0;
+            document.getElementById("stockQuantity").value = item.stockQuantity || 0;
+            document.getElementById("author").value = item.author || '';
+            document.getElementById("isbn").value = item.isbn || '';
+
+            if (item.imagePath) {
+                document.getElementById("currentImage").src = item.imagePath;
+            }
+
+        } catch (error) {
+            console.error("데이터 조회 실패:", error);
+            alert("상품 정보를 불러오는데 실패했습니다.\n" + error.message);
+            window.location.href = "/view/itemRegister";
+        }
     });
 
-    // 3. 수정 버튼 누르면 PUT 요청
-    document.getElementById("editForm").addEventListener("submit", function (e) {
+    // 새 이미지 선택 시 미리보기
+    document.getElementById("image").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById("imagePreview");
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                preview.src = event.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+
+    // 폼 제출 (PUT 요청)
+    document.getElementById("editForm").addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const formData = new FormData();
 
-        // 새 이미지가 선택됐을 때만 추가
+        // 새 이미지가 선택된 경우만 추가
         const imageFile = document.getElementById("image").files[0];
-
         if (imageFile) {
             formData.append("image", imageFile);
         }
 
         const data = {
-            name: document.getElementById("name").value,
-            price: parseInt(document.getElementById("price").value),
-            stockQuantity: parseInt(document.getElementById("stockQuantity").value),
-            author: document.getElementById("author").value,
-            isbn: document.getElementById("isbn").value
+            name: document.getElementById("name").value.trim(),
+            price: parseInt(document.getElementById("price").value) || 0,
+            stockQuantity: parseInt(document.getElementById("stockQuantity").value) || 0,
+            author: document.getElementById("author").value.trim(),
+            isbn: document.getElementById("isbn").value.trim()
         };
 
-        // JSON 데이터 추가
+        // 필수 항목 검증
+        if (!data.name || data.price <= 0 || data.stockQuantity < 0) {
+            alert("상품명, 가격, 재고 수량은 필수 입력 항목입니다.");
+            return;
+        }
+
         formData.append("data", new Blob([JSON.stringify(data)], { type: "application/json" }));
 
+        try {
+            const response = await fetch(`/item/v1/${itemId}/edit`, {
+                method: "PUT",
+                body: formData,
+                headers: { "Authorization": `Bearer ${token}` }
+            });
 
-        fetch(`/item/v1/${itemId}/edit`, {
-            method: "PUT",
-            body: formData,
-            headers: { "Authorization": `Bearer ${token}` }
-        }).then(response => {
             if (response.ok) {
-                alert("상품이 수정되었습니다.");
-                window.location.href = "/view/itemRegister"; // 목록으로 이동
+                alert("상품이 성공적으로 수정되었습니다.");
+                window.location.href = "/view/itemRegister";
             } else {
-                alert("수정 실패");
+                const error = await response.json();
+                alert("수정 실패: " + (error.message || "잠시 후 다시 시도해주세요."));
             }
-        }).catch(error => alert("에러: " + error));
+        } catch (error) {
+            console.error("수정 오류:", error);
+            alert("수정 중 오류가 발생했습니다.");
+        }
     });
 
-    document.getElementById('cancelButton').addEventListener('click', function () {
-        window.history.back(); // 이전 페이지로 이동
+    // 취소 버튼
+    document.getElementById("cancelButton").addEventListener("click", function () {
+        if (confirm("입력한 내용이 저장되지 않습니다.\n정말 취소하시겠습니까?")) {
+            window.history.back();
+        }
     });
 </script>
+
 <script th:src="@{/js/navbar.js}"></script>
+
 </body>
 </html>

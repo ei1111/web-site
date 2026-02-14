@@ -1,100 +1,353 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>상품 상세 - ShopHub</title>
 
-<head th:replace="~{fragments/common :: head('상품리스트')}">
-    <script defer="" src="/js/bootstrap.bundle.min.js"></script>
+    <!-- fragments/common head 불러오기 -->
+    <th:block th:replace="~{fragments/common :: head('상품 상세')}"></th:block>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-start: #2563eb;
+            --primary-end: #0891b2;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(203, 213, 225, 0.3);
+            --shadow-md: 0 12px 40px rgba(0,0,0,0.12);
+        }
+
+        [data-bs-theme="dark"] {
+            --card-bg: rgba(30, 41, 59, 0.72);
+            --card-border: rgba(59, 69, 92, 0.4);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            color: #1e293b;
+        }
+
+        [data-bs-theme="dark"] body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+        }
+
+        .detail-container {
+            max-width: 1000px;
+            margin: 2.5rem auto;
+        }
+
+        .card-detail {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-detail:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.4);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        [data-bs-theme="dark"] .product-image {
+            background: rgba(30,41,59,0.4);
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .product-title {
+            font-weight: 800;
+            font-size: 2.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+        }
+
+        [data-bs-theme="dark"] .product-price {
+            color: #f87171;
+        }
+
+        .stock-info {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #475569;
+        }
+
+        [data-bs-theme="dark"] .stock-info {
+            color: #cbd5e1;
+        }
+
+        .quantity-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-input {
+            width: 100px;
+            text-align: center;
+        }
+
+        .btn-order {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            border-radius: 9999px;
+            padding: 0.9rem 2.5rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37,99,235,0.3);
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .btn-order:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(37,99,235,0.45);
+        }
+
+        .btn-order:disabled {
+            background: #9ca3af;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-back {
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+
+        .bd-mode-toggle .btn {
+            background: linear-gradient(135deg, var(--primary-start) 0%, var(--primary-end) 100%);
+            border: none;
+            box-shadow: 0 8px 25px rgba(37,99,235,0.3);
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .product-image {
+                height: 300px;
+            }
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+            .quantity-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-body {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
 </head>
 
-
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-         th:replace="fragments/common :: menu('itemList')">
-    </nav>
-</header>
 <body>
-<div class="container py-5">
-    <input type="hidden" name="itemId" id="itemId" />
-    <a href="/item/itemList" class="btn btn-secondary mb-4">← 목록으로 돌아가기</a>
 
-    <div id="itemDetail" class="row justify-content-center">
-        <!-- JavaScript로 상품 상세 내용이 추가될 부분 -->
-    </div>
+<!-- 다크모드 토글 -->
+<div class="dropdown position-fixed bottom-0 end-0 mb-5 me-4 bd-mode-toggle" style="z-index: 1030;">
+    <button class="btn btn-primary shadow-lg" id="bd-theme" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Toggle theme">
+        <i class="bi bi-circle-half fs-4"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="bd-theme" style="border-radius: 12px; min-width: 140px;">
+        <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"><i class="bi bi-sun-fill me-2"></i> Light</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"><i class="bi bi-moon-stars-fill me-2"></i> Dark</button></li>
+        <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"><i class="bi bi-circle-half me-2"></i> Auto</button></li>
+    </ul>
 </div>
 
+<!-- Navbar -->
+<header th:replace="~{fragments/common :: menu('itemList')}"></header>
+
+<main class="flex-shrink-0">
+    <div class="detail-container">
+
+        <a href="/view/itemList" class="btn btn-outline-secondary mb-4 d-inline-flex align-items-center gap-2">
+            <i class="bi bi-arrow-left"></i> 목록으로 돌아가기
+        </a>
+
+        <div class="card card-detail">
+            <div id="itemDetail" class="row g-0">
+                <!-- JavaScript로 내용이 채워짐 -->
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 다크모드 토글 스크립트 -->
 <script>
-    // URL에서 itemId 추출
+    (() => {
+        'use strict'
+        const getStoredTheme = () => localStorage.getItem('theme')
+        const setStoredTheme = theme => localStorage.setItem('theme', theme)
+        const getPreferredTheme = () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme) return storedTheme
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        const setTheme = theme => {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark')
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme)
+            }
+        }
+        const showActiveTheme = theme => {
+            const themeSwitcher = document.querySelector('#bd-theme')
+            if (!themeSwitcher) return
+            const icon = themeSwitcher.querySelector('i')
+            if (theme === 'light') icon.className = 'bi bi-sun-fill fs-4'
+            else if (theme === 'dark') icon.className = 'bi bi-moon-stars-fill fs-4'
+            else icon.className = 'bi bi-circle-half fs-4'
+        }
+        setTheme(getPreferredTheme())
+        showActiveTheme(getPreferredTheme())
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme()
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme())
+                showActiveTheme(getPreferredTheme())
+            }
+        })
+        document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const theme = toggle.getAttribute('data-bs-theme-value')
+                setStoredTheme(theme)
+                setTheme(theme)
+                showActiveTheme(theme)
+            })
+        })
+    })()
+</script>
+
+<!-- 상품 상세 불러오기 & 주문 스크립트 -->
+<script>
     function getItemIdFromUrl() {
-        const urlParts = window.location.pathname.split('/');
-        return urlParts[urlParts.length - 2]; // /item/{id}/detail → id 추출
+        const pathParts = window.location.pathname.split('/');
+        return pathParts[pathParts.length - 2]; // /view/item/{id}/detail → id
     }
 
-    // 페이지 로드 시 동작
     window.addEventListener('DOMContentLoaded', () => {
         const itemId = getItemIdFromUrl();
-        document.getElementById('itemId').value = itemId; // hidden input에 저장
-
+        if (!itemId || isNaN(itemId)) {
+            alert('잘못된 상품 ID입니다.');
+            window.location.href = '/view/itemList';
+            return;
+        }
         fetchItemDetail(itemId);
     });
 
     const token = localStorage.getItem("accessToken");
-    // 서버에서 상품 상세 정보 가져오기
-    function fetchItemDetail(itemId) {
-        fetch(`/item/v1/${itemId}/detail`,{
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('상품 정보를 불러오는데 실패했습니다.');
-            return response.json();
-        })
-        .then(item => renderItemDetail(item))
-        .catch(error => console.error('에러:', error));
+
+    async function fetchItemDetail(itemId) {
+        try {
+            const response = await fetch(`/item/v1/${itemId}/detail`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error('상품 정보를 불러오는데 실패했습니다.');
+            }
+
+            const item = await response.json();
+            renderItemDetail(item);
+
+        } catch (error) {
+            console.error('에러:', error);
+            alert('상품 상세 정보를 불러오지 못했습니다.\n' + error.message);
+            window.location.href = '/view/itemList';
+        }
     }
 
-    // 상품 상세 화면 렌더링
     function renderItemDetail(item) {
         const container = document.getElementById('itemDetail');
 
+        const isOutOfStock = item.stockQuantity <= 0;
+
         container.innerHTML = `
-            <div class="col-md-8">
-                <div class="card mb-4 shadow-sm">
-                    <img src="${item.imagePath}" class="card-img-top" alt="${item.name}">
-                    <div class="card-body">
-                        <h2 class="card-title mb-3">${item.name}</h2>
-                        <h4 class="text-danger mb-3">가격: ${item.price.toLocaleString()}원</h4>
-                        <p class="card-text">${item.description || '상품 설명이 없습니다.'}</p>
+      <div class="col-md-5">
+        <img src="${item.imagePath || '/images/no-image.png'}" class="product-image" alt="${item.name}">
+      </div>
+      <div class="col-md-7">
+        <div class="card-body">
+          <h2 class="product-title">${item.name}</h2>
+          <h4 class="product-price">${item.price.toLocaleString()}원</h4>
 
-                      <div class="d-flex align-items-center mb-3">
-                        <label for="quantityInput" class="me-2 mb-0">수량</label>
-                        <input type="number" id="quantityInput" class="form-control" value="1" min="1" style="width: 80px;">
+          <p class="stock-info">
+            재고: <strong>${item.stockQuantity.toLocaleString()}개</strong>
+            ${isOutOfStock ? '<span class="text-danger ms-2">품절</span>' : ''}
+          </p>
 
-                           <h4 class="text-danger mb-3">재고: ${item.stockQuantity.toLocaleString()}개</h4>
-                      </div>
+          <p class="mb-4">${item.description || '상품 설명이 없습니다.'}</p>
 
-                        <!-- 주문 버튼 -->
-                         <div class="mt-auto text-end">
-                            <button class="btn btn-primary" onclick="orderItem(${item.id},  ${item.stockQuantity})">주문하기</button>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        `;
+          <div class="quantity-group">
+            <label for="quantityInput" class="form-label me-3 mb-0">수량</label>
+            <input type="number" id="quantityInput" class="form-control quantity-input" value="1" min="1" max="${item.stockQuantity}" ${isOutOfStock ? 'disabled' : ''}>
+          </div>
+
+          <div class="mt-auto text-end">
+            <button class="btn btn-order btn-lg px-5"
+                    ${isOutOfStock ? 'disabled' : ''}
+                    onclick="orderItem(${item.id}, ${item.stockQuantity})">
+              ${isOutOfStock ? '품절' : '주문하기'}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
     }
 
+    function orderItem(itemId, stockQuantity) {
+        const quantityInput = document.getElementById('quantityInput');
+        const quantity = parseInt(quantityInput.value);
 
-    // 주문 요청 함수
-    function orderItem(itemId, stockQuntity) {
-        const quantity = document.getElementById('quantityInput').value;
-
-        if (quantity > stockQuntity) {
-            alert('수량이 재고보다 많습니다.');
+        if (isNaN(quantity) || quantity < 1) {
+            alert('수량은 1개 이상이어야 합니다.');
             return;
         }
 
-        if (quantity < 1) {
-            alert('수량은 1개 이상이어야 합니다.');
+        if (quantity > stockQuantity) {
+            alert('선택한 수량이 재고보다 많습니다.');
             return;
         }
 
@@ -102,29 +355,32 @@
             return;
         }
 
-        const token = localStorage.getItem("accessToken");
         fetch('/order/v1/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ itemId: itemId, count: parseInt(quantity) })
+            body: JSON.stringify({ itemId: itemId, count: quantity })
         })
         .then(response => {
-            if (!response.ok) throw new Error('주문 요청 실패');
-            return response.text(); // 빈 응답도 허용
+            if (!response.ok) {
+                throw new Error('주문 요청에 실패했습니다.');
+            }
+            return response.text();
         })
-        .then(result => {
+        .then(() => {
             alert('주문이 완료되었습니다!');
             window.location.href = '/view/itemList';
         })
         .catch(error => {
             console.error('주문 실패:', error);
-            alert('주문 처리 중 오류가 발생했습니다.');
+            alert('주문 처리 중 오류가 발생했습니다.\n' + error.message);
         });
     }
 </script>
+
 <script th:src="@{/js/navbar.js}"></script>
+
 </body>
 </html>
