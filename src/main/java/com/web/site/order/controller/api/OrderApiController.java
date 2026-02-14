@@ -25,9 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order/v1")
 @Tag(name = "3. 주문 API")
 public class OrderApiController {
-
     private final OrderService orderService;
-
 
     @PostMapping("/new")
     @Operation(summary = "주문 정보 등록 API")

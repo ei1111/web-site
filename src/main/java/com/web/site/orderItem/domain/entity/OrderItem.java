@@ -17,7 +17,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class OrderItem {
 
@@ -30,6 +29,7 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
@@ -37,7 +37,6 @@ public class OrderItem {
     private int orderPrice;
 
     private int count;
-
 
     public static OrderItem createOrderItem(Item item, int price, int count) {
         item.removeStock(count);

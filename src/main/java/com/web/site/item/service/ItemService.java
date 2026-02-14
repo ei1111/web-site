@@ -31,9 +31,7 @@ public class ItemService {
     public void save(MultipartFile imageFile, ItemRequest request) {
             String imagePath = getImagePath(imageFile);
             itemRepository.save(Item.from(request, imagePath));
-
     }
-
 
     public List<ItemResponse> findAll() {
         AtomicInteger rowNum = new AtomicInteger(1);

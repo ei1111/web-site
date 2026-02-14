@@ -243,6 +243,7 @@
                     <th scope="col" style="width: 12%;">상태</th>
                     <th scope="col" style="width: 16%;">주문일시</th>
                     <th scope="col" style="width: 12%;">관리</th>
+                    <th scope="col" style="width: 12%;">완료일시</th>
                 </tr>
                 </thead>
                 <tbody id="orderTableBody">
@@ -372,17 +373,17 @@
         <td class="${statusClass} text-center">${item.status}</td>
         <td class="text-center">${item.orderDate || '-'}</td>
         <td class="text-center">
-          ${item.status === 'ORDER' ?
-                `<button class="btn btn-payment btn-sm px-3" onclick="paymentProcess(${item.id}, '${item.memberName}', '${orderItem.itemName}', ${orderItem.orderPrice}, ${orderItem.count})">
-               구매하기
-             </button>` : ''}
+        ${item.status === 'ORDER' ?
+        `<button class="btn btn-payment btn-sm px-3" onclick="paymentProcess(${item.id}, '${item.memberName}', '${orderItem.itemName}', ${orderItem.orderPrice}, ${orderItem.count})">
+           구매하기
+         </button>`
+            : item.status === 'CANCEL' ? `<span class="text-danger fw-bold">취소</span>`
+            : item.status === 'PAYMENT' ? `<span class="text-success fw-bold">결제 완료</span>`
+             : ''
+            }
         </td>
-        <td class="text-center">
-          ${item.status === 'ORDER' ?
-                `<button class="btn btn-outline-danger btn-sm px-3" onclick="cancelOrder(${item.id})">
-               취소
-             </button>` : ''}
-        </td>
+          <td class="text-center">
+          </td>
       `;
             tbody.appendChild(row);
         });

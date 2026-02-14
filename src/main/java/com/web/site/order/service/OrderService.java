@@ -14,6 +14,7 @@ import com.web.site.order.domain.dto.response.OrderResponse;
 import com.web.site.order.domain.entity.Order;
 import com.web.site.order.repository.OrderRepository;
 import com.web.site.orderItem.domain.entity.OrderItem;
+import com.web.site.orderItem.repository.OrderItemRepository;
 import com.web.site.payment.domain.entity.Payment;
 import com.web.site.payment.facade.CancelFacadeEvent;
 import com.web.site.payment.repository.PaymentRepository;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
@@ -55,6 +57,7 @@ public class OrderService {
         redisManager.delete(RedisKeyPrefix.ITEM_DETAIL, itemId);
 
         orderRepository.save(order);
+        orderItemRepository.save(orderItem);
     }
 
     public List<OrderResponse> orderSearch(OrderSearchRequest request, String userId) {
