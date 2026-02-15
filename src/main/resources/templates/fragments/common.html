@@ -147,13 +147,114 @@
             🌐 <span th:text="#{menu.language}">Language</span>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="?lang=ko">한국어 (KR)</a></li>
-            <li><a class="dropdown-item" href="?lang=en">English (EN)</a></li>
+            <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeLanguage('ko')">한국어 (KR)</a></li>
+            <li><a class="dropdown-item" href="javascript:void(0)" onclick="changeLanguage('en')">English (EN)</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
+
+  <!-- 언어 변경 스크립트 - nav 안에 포함 -->
+  <script>
+    function changeLanguage(lang) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      window.location.href = url.toString();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("accessToken");
+      const role = token ? parseJwt(token)?.role : null;
+
+      // 권한 기반 UI 제어
+      controlMenuByAuth(role);
+      controlMemberNameInput(role);
+
+      // 로그아웃 버튼
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("accessToken");
+          location.href = "/";
+        });
+      }
+    });
+
+
+    // ==============================
+    // ADMIN 전용 input 제어
+    // ==============================
+    function controlMemberNameInput(role) {
+      const memberNameInput = document.getElementById("memberName");
+      const orderListMenu = document.getElementById("orderListMenu");
+
+      if (!memberNameInput) return;
+
+      const show = role === "ADMIN" && orderListMenu;
+      memberNameInput.style.display = show ? "block" : "none";
+    }
+
+
+    // ==============================
+    // 메뉴 권한 제어
+    // ==============================
+    function controlMenuByAuth(role) {
+      const loginMenu = document.getElementById("loginMenu");
+      const logoutMenu = document.getElementById("logoutMenu");
+      const mypageMenu = document.getElementById("mypageMenu");
+      const memberListMenu = document.getElementById("memberListMenu");
+      const orderListMenu = document.getElementById("orderListMenu");
+      const adminMenu = document.getElementById("adminMenu");
+      const boardListMenu = document.getElementById("boardListMenu");
+      const itemRegistMenu = document.getElementById("itemRegistMenu");
+      const itemListMenu = document.getElementById("itemListMenu");
+
+      const isLoggedIn = !!role;
+      const isAdmin = role === "ADMIN";
+
+      // 로그인 상태
+      toggle(loginMenu, !isLoggedIn);
+      toggle(logoutMenu, isLoggedIn);
+      toggle(mypageMenu, isLoggedIn);
+
+      // 로그인 사용자 공통 메뉴
+      toggle(itemListMenu, isLoggedIn);
+      toggle(orderListMenu, isLoggedIn);
+      toggle(adminMenu, isLoggedIn);
+      toggle(boardListMenu, isLoggedIn);
+
+      // 관리자 메뉴
+      toggle(memberListMenu, isLoggedIn && isAdmin);
+      toggle(itemRegistMenu, isLoggedIn && isAdmin);
+    }
+
+
+    // ==============================
+    // 공통 show/hide 유틸
+    // ==============================
+    function toggle(element, show) {
+      if (!element) return;
+      element.style.display = show ? "block" : "none";
+    }
+
+
+    // ==============================
+    // JWT 파싱
+    // ==============================
+    function parseJwt(token) {
+      try {
+        const base64Payload = token.split('.')[1];
+        const payload = atob(base64Payload);
+        return JSON.parse(payload);
+      } catch (e) {
+        return null;
+      }
+    }
+  </script>
+
 </nav>
+
 </body>
 </html>
