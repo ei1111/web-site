@@ -67,7 +67,6 @@ This project is a modern e-commerce platform that demonstrates full-stack develo
 - ✅ Product search and filtering
 
 ### Order System
-- ✅ Shopping cart functionality
 - ✅ Order placement and tracking
 - ✅ Payment integration (PG integration)
 - ✅ Order history
