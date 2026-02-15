@@ -113,7 +113,18 @@ public class Payment extends BaseEntity {
                 .build();
     }
 
+    public static Payment canceledFrom(Order order) {
+        return Payment.builder()
+                .userId(order.getMember().getId())
+                .order(order)
+                .paymentDate(LocalDateTime.now())
+                .paymentAmount(BigDecimal.ZERO)
+                .status(PaymentStatus.CANCEL.name())
+                .build();
+    }
+
+
     public void cancel() {
-        this.status = "cancel";
+        this.status = PaymentStatus.CANCEL.name();
     }
 }

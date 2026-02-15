@@ -41,14 +41,14 @@ public class MemberApiController {
 
     @GetMapping("/members/me")
     @Operation(summary = "회원 아이디로 상세 조회 API")
-    public ResponseEntity<MemberResponse> member(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return ResponseEntity.ok().body(memberService.getMemberResponseByUserId(userDetails.getUsername()));
+    public ResponseEntity<MemberResponse> member(@AuthenticationPrincipal(expression = "username") String userId) {
+        return ResponseEntity.ok().body(memberService.getMemberResponseByUserId(userId));
     }
 
     @PutMapping("/members")
     @Operation(summary = "회원 정보 수정 API")
-    public ResponseEntity<String> update( @RequestBody MemberModifyRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        memberServiceTx.update(request, userDetails.getUsername());
+    public ResponseEntity<String> update( @RequestBody MemberModifyRequest request, @AuthenticationPrincipal(expression = "username") String userId) {
+        memberServiceTx.update(request, userId);
         return ResponseEntity.ok().body("회원 수정 성공");
     }
 

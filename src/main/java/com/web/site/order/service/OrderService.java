@@ -13,8 +13,8 @@ import com.web.site.order.domain.dto.request.OrderSearchRequest;
 import com.web.site.order.domain.dto.response.OrderResponse;
 import com.web.site.order.domain.entity.Order;
 import com.web.site.order.repository.OrderRepository;
-import com.web.site.orderItem.domain.entity.OrderItem;
-import com.web.site.orderItem.repository.OrderItemRepository;
+import com.web.site.order.domain.entity.OrderItem;
+import com.web.site.payment.domain.dto.request.PaymentRequest;
 import com.web.site.payment.domain.entity.Payment;
 import com.web.site.payment.facade.CancelFacadeEvent;
 import com.web.site.payment.repository.PaymentRepository;
@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
@@ -57,7 +56,6 @@ public class OrderService {
         redisManager.delete(RedisKeyPrefix.ITEM_DETAIL, itemId);
 
         orderRepository.save(order);
-        orderItemRepository.save(orderItem);
     }
 
     public List<OrderResponse> orderSearch(OrderSearchRequest request, String userId) {
@@ -75,11 +73,15 @@ public class OrderService {
                 .orElseThrow(() -> new NoSuchElementException("OrderItem not found"));
 
         redisManager.delete(RedisKeyPrefix.ITEM_DETAIL, itemId);
+        Payment cancelPayment = Payment.canceledFrom(order);
+        paymentRepository.save(cancelPayment);
 
+        /*
+         기존 로직 -> 주문 완료 후에도 취소가 가능했지만 현재는 주문-> 주문완료, 취소로 쉽게 변경
         paymentRepository.findByOrder(order)
                 .map(Payment::getImpUid)
                 .ifPresent(impUid -> {
                     cancelFacadeEvent.cancelEvent(impUid);
-                });
+                });*/
     }
 }

@@ -29,7 +29,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         return jpaQueryFactory.selectFrom(order)
                 .join(order.member, member)
-                .join(order.payment, payment)
+                .leftJoin(order.payment, payment)
                 .where(
                         applyRoleScope(role, userId)
                       , eqStatus(request.getOrderStatus())

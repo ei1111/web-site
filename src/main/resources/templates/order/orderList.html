@@ -243,6 +243,7 @@
                     <th scope="col" style="width: 12%;" th:text="#{order.status}">상태</th>
                     <th scope="col" style="width: 16%;" th:text="#{order.date}">주문일시</th>
                     <th scope="col" style="widt8h: 12%;" th:text="#{order.manage}">관리</th>
+                    <th scope="col" style="widt8h: 12%;" th:text="#{button.cancel}">취소</th>
                     <th scope="col" style="width: 15%;" th:text="#{order.complete.date}">완료일시</th>
                 </tr>
                 </thead>
@@ -382,6 +383,9 @@
              : ''
             }
         </td>
+          <td>
+                ${item.status === 'ORDER' ? `<button class="btn btn-danger" onclick="cancelOrder(${item.id})">취소</button>` : ''}
+            </td>
           <td class="text-center">${item.paymentDate || '-'}</td>
       `;
             tbody.appendChild(row);

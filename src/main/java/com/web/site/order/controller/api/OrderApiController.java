@@ -29,15 +29,14 @@ public class OrderApiController {
 
     @PostMapping("/new")
     @Operation(summary = "주문 정보 등록 API")
-    public ResponseEntity<String> order(@Valid @RequestBody OrderRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        orderService.order(request, userDetails.getUsername());
+    public ResponseEntity<String> order(@Valid @RequestBody OrderRequest request, @AuthenticationPrincipal(expression = "username") String userId) {
+        orderService.order(request, userId);
         return ResponseEntity.ok("order success");
     }
 
     @GetMapping("/list")
     @Operation(summary = "주문 정보 리스트 API")
-    public ResponseEntity<List<OrderResponse>> orderSearch(OrderSearchRequest orderSearch , @AuthenticationPrincipal CustomUserDetails userDetails) {
-        String userId = userDetails.getUsername();
+    public ResponseEntity<List<OrderResponse>> orderSearch(OrderSearchRequest orderSearch , @AuthenticationPrincipal(expression = "username") String userId) {
         return  ResponseEntity.ok(orderService.orderSearch(orderSearch, userId));
     }
 

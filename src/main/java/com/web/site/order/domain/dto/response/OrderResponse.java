@@ -45,6 +45,8 @@ public class OrderResponse {
         this.memberName = order.getMember().getName();
         this.status = order.getStatus();
         this.orderDate = order.getOrderDate();
-        this.paymentDate = order.getPayment().getPaymentDate();
+        this.paymentDate = order.getPayment() != null
+                ? order.getPayment().getPaymentDate()
+                : null;
     }
 }

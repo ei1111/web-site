@@ -1,8 +1,7 @@
-package com.web.site.orderItem.domain.entity;
+package com.web.site.order.domain.entity;
 
 
 import com.web.site.item.domain.entity.Item;
-import com.web.site.order.domain.entity.Order;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

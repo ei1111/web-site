@@ -1,7 +1,7 @@
 package com.web.site.order.domain.dto.response;
 
 
-import com.web.site.orderItem.domain.entity.OrderItem;
+import com.web.site.order.domain.entity.OrderItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.Getter;
