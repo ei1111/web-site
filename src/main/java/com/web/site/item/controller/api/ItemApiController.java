@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/item/v1")
-@Tag(name = "2. 상품 API")
+@Tag(name = "3. 상품 API")
 public class ItemApiController {
     private final ItemService itemService;
 

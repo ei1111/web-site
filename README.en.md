@@ -20,8 +20,6 @@
 
 This project is a modern e-commerce platform that demonstrates full-stack development capabilities with Spring Boot backend and responsive frontend.
 
-**Live Demo**: [https://your-domain.com](https://your-domain.com)
-
 ### Purpose
 - Demonstrates enterprise-level architecture and best practices
 - Showcases full development lifecycle from design to deployment
@@ -46,8 +44,6 @@ This project is a modern e-commerce platform that demonstrates full-stack develo
 
 ### Infrastructure
 - **Cloud**: AWS (EC2, RDS, ElastiCache)
-- **CI/CD**: GitHub Actions
-- **Monitoring**: CloudWatch
 - **Container**: Docker
 
 ---
@@ -239,23 +235,36 @@ http://localhost:8080/swagger-ui.html
 
 ### Main Endpoints
 
+#### Members
+- `GET /api/v1/members` - Get member list
+- `PUT /api/v1/members` - Update member information
+- `POST /api/v1/members` - Register a new member
+- `GET /api/v1/members.me` - Get member details by ID
+
 #### Authentication
-- `POST /api/v1/members` - User registration
-- `POST /auth/login` - User login
-
-#### Products
-- `GET /api/v1/items` - Get product list
-- `POST /api/v1/items` - Create product (ADMIN)
-- `PUT /api/v1/items/{id}` - Update product (ADMIN)
-
-#### Orders
-- `POST /api/v1/orders` - Create order
-- `GET /api/v1/orders` - Get order list
+- `POST /auth/login` - Login
 
 #### Board
-- `GET /api/v1/boards` - Get post list
-- `POST /api/v1/boards` - Create post
-- `DELETE /api/v1/boards/{id}` - Delete post
+- `GET /api/v1/form` - Get a post
+- `PUT /api/v1/form` - Update a post
+- `POST /api/v1/form` - Create a post
+- `DELETE /api/v1/form` - Delete a post
+- `GET /api/v1/list` - Get post list
+
+#### Products
+- `GET /item/v1/{id}/detail` - Get product details
+- `PUT /item/v1/{id}/edit` - Update product
+- `GET /item/v1/list` - Get product list
+- `POST /item/v1/new` - Register a new product
+
+#### Orders
+- `POST /order/v1/{id}/orders` - Cancel an order
+- `GET /order/v1/list` - Get order list
+- `POST /order/v1/new` - Create a new order
+
+#### Payments
+- `POST /payments/v1/save` - Register a payment
+
 
 ---
 

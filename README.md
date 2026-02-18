@@ -20,8 +20,6 @@
 
 이 프로젝트는 Spring Boot 백엔드와 반응형 프론트엔드를 갖춘 현대적인 전자상거래 플랫폼입니다.
 
-**라이브 데모**: [https://your-domain.com](https://your-domain.com)
-
 ### 목적
 - 엔터프라이즈급 아키텍처와 모범 사례 구현
 - 설계부터 배포까지 전체 개발 생명주기 시연
@@ -46,8 +44,6 @@
 
 ### Infrastructure
 - **Cloud**: AWS (EC2, RDS, ElastiCache)
-- **CI/CD**: GitHub Actions
-- **Monitoring**: CloudWatch
 - **Container**: Docker
 
 ---
@@ -240,24 +236,35 @@ http://localhost:8080/swagger-ui.html
 
 ### 주요 엔드포인트
 
+#### 회원
+- `GET /api/v1/members` - 회원 리스트
+- `PUT /api/v1/members` - 회원 정보 수정
+- `POST /api/v1/members` - 회원 정보 등록
+- `GET /api/v1/members.me` - 회원 아이디로 상세 조회
+
 #### 인증
-- `POST /api/v1/members` - 회원 가입
 - `POST /auth/login` - 로그인
 
+#### 게시판
+- `GET /api/v1/form` - 게시글 글 조회
+- `PUT /api/v1/form` - 게시글 글 수
+- `POST /api/v1/form` - 게시글 작성
+- `DELETE /api/v1/form` - 게시글 삭제
+- `GET /api/v1/list` - 게시글 리스트 조회
+
 #### 상품
-- `GET /api/v1/items` - 상품 목록 조회
-- `POST /api/v1/items` - 상품 등록 (ADMIN)
-- `PUT /api/v1/items/{id}` - 상품 수정 (ADMIN)
+- `GET /item/v1/{id}/detail` - 상품 상세 조회 
+- `PUT /item/v1/{id}/edit` - 상품 수정 
+- `GET /item/v1/list` - 상품 리스트
+- `POST /item/v1/new` - 상품 정보 등록
 
 #### 주문
-- `POST /api/v1/orders` - 주문 생성
-- `GET /api/v1/orders` - 주문 목록 조회
+- `POST /order/v1/{id}/orders` - 주문 취소
+- `GET /order/v1/list` - 주문 목록 조회
+- `POST /order/v1/new` - 주문 정보 등록
 
-#### 게시판
-- `GET /api/v1/boards` - 게시글 목록 조회
-- `POST /api/v1/boards` - 게시글 작성
-- `DELETE /api/v1/boards/{id}` - 게시글 삭제
-
+#### 결제
+- `POST /payments/v1/save` - 결제 등록
 ---
 
 ## 🔒 보안 고려사항

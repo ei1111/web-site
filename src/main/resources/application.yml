@@ -11,6 +11,11 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+# Swagger 정렬 설정 추가
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
 ---
 spring:
   config:

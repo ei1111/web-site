@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order/v1")
-@Tag(name = "3. 주문 API")
+@Tag(name = "4. 주문 API")
 public class OrderApiController {
     private final OrderService orderService;
 
