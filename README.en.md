@@ -44,6 +44,7 @@ This project is a modern e-commerce platform that demonstrates full-stack develo
 
 ### Infrastructure
 - **Cloud**: AWS (EC2, RDS, ElastiCache)
+- **CI/CD**: GitHub Actions
 - **Container**: Docker
 
 ---

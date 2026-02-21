@@ -44,6 +44,7 @@
 
 ### Infrastructure
 - **Cloud**: AWS (EC2, RDS, ElastiCache)
+- **CI/CD**: GitHub Actions
 - **Container**: Docker
 
 ---
